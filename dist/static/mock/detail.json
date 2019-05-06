@@ -1,0 +1,25 @@
+{
+  "ret": true,
+  "data": {
+    "sightName": "大连圣亚海洋世界(AAAA景区)",
+    "bannerImg": "http://img1.qunarzz.com/sight/p0/201404/23/04b92c99462687fa1ba45c1b5ba4ad77.jpg_600x330_bf9c4904.jpg",
+    "gallaryImgs": ["https://p1.meituan.net/400.0/travel/5fa66f9f5da4c52088df0cd0142a12151211682.png", "https://p1.meituan.net/400.0/travel/c27c51d2ba5242c641d5714816a977281030766.png", "https://p0.meituan.net/400.0/travel/255a2f8baa936e8d973452026f719da3635662.png", "https://p0.meituan.net/400.0/travel/781c233cb8aca8c880398523e7a18f0a232896.png", "https://p0.meituan.net/400.0/hoteltdc/b9e030c9bd543a922db940aafed534aa336506.jpg", "https://p1.meituan.net/400.0/travel/255056b9c72e66e499201c8c0e7d68ab659969.png", "https://p0.meituan.net/400.0/travel/0210cc3af84bf4afd02476d87fe83518575732.png", "https://p1.meituan.net/400.0/travel/992f869aabb56b5b63d179c6ca237285677856.png"],
+    "categoryList": [{
+        "title": "成人票",
+        "children": [{
+          "title": "成人三馆联票",
+          "children": [{
+            "title": "成人三馆联票 - 某一连锁店销售"
+          }]
+        },{
+          "title": "成人五馆联票"
+        }]
+      }, {
+        "title": "学生票"
+      }, {
+        "title": "儿童票"
+      }, {
+        "title": "特惠票"
+      }]
+  }
+}
