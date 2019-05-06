@@ -135,16 +135,40 @@
     >
       <checker-item v-for="i in [1, 2, 3]" :key="i" :value="i">{{ ['good', 'nice','awesome'][i - 1] }}</checker-item>
     </checker>
+  <div class="container">
+    <p>child_select</p>
+    <router-link to="/bind_success">
+      <button>下一步</button>
+    </router-link>
+    <router-link to="/create_child">
+      <button>创建孩子</button>
+    </router-link>
+    <div>
+      <group>
+        <cell :title="name" :value="value" @click.native="onClick"/>
+      </group>
+    </div>
   </div>
 </template>
 
 <script>
-import { Checker, CheckerItem } from 'vux'
+import { Cell, Group } from 'vux'
 export default {
   name: 'ChildSelect',
   components: {
-    Checker,
-    CheckerItem
+    Group,
+    Cell
+  },
+  data() {
+    return {
+      name: '123',
+      value: '456'
+    }
+  },
+  methods: {
+    onClick() {
+      console.log('aaaaaaa')
+    }
   }
 }
 </script>
