@@ -7,12 +7,28 @@
     <router-link to="/create_child">
       <button>创建孩子</button>
     </router-link>
+    <div>
+      <group>
+        <cell :title="name" :value="value" @click.native="onClick"/>
+      </group>
+    </div>
   </div>
 </template>
 
 <script>
+import { Cell, Group } from 'vux'
 export default {
-  name: 'ChildSelect'
+  name: 'ChildSelect',
+  components: {
+    Group,
+    Cell
+  },
+  data() {
+    return {
+      name: '123',
+      value: '456'
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
