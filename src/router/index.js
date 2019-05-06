@@ -12,35 +12,37 @@ import Router from 'vue-router'
  */
 Vue.use(Router)
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'doctor',
-      component: () => import('@/pages/mobile/doctor')
-    },
-    {
-      path: '/bind_success',
-      name: 'bind_success',
-      component: () => import('@/pages/mobile/bind_success')
-    },
-    {
-      path: '/child_select',
-      name: 'child_select',
-      component: () => import('@/pages/mobile/child_select')
-    },
-    {
-      path: '/create_child',
-      name: 'create_child',
-      component: () => import('@/pages/mobile/create_child')
-    },
-    {
-      path: '/sign_in',
-      name: 'sign_in',
-      component: () => import('@/pages/mobile/sign_in')
-    }
-  ],
-  scrollBehavior (to, from, savedPosition) {
-    return {x: 0, y: 0}
+export const constantRouterMap = [
+  {
+    path: '/doctor',
+    name: 'doctor',
+    component: () => import('@/pages/mobile/doctor')
+  },
+  {
+    path: '/bind_success',
+    name: 'bind_success',
+    component: () => import('@/pages/mobile/bind_success')
+  },
+  {
+    path: '/child_select',
+    name: 'child_select',
+    component: () => import('@/pages/mobile/child_select')
+  },
+  {
+    path: '/create_child',
+    name: 'create_child',
+    component: () => import('@/pages/mobile/create_child')
+  },
+  {
+    path: '/sign_in',
+    name: 'sign_in',
+    component: () => import('@/pages/mobile/sign_in')
   }
+]
+
+export default new Router({
+  mode: 'history', // 后端支持可开
+  base: 'm',
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
 })

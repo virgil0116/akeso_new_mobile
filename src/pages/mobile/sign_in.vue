@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'child_select'
+  name: 'ChildSelect'
 }
 </script>
 <style lang="stylus" scoped>
