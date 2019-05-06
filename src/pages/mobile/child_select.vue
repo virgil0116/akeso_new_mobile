@@ -28,6 +28,11 @@ export default {
       name: '123',
       value: '456'
     }
+  },
+  methods: {
+    onClick() {
+      console.log('aaaaaaa')
+    }
   }
 }
 </script>
