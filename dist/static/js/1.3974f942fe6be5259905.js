@@ -1,0 +1,2 @@
+webpackJsonp([1],{JKOV:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i={render:function(){this.$createElement;this._self._c;return this._m(0)},staticRenderFns:[function(){var e=this.$createElement,t=this._self._c||e;return t("div",{staticClass:"container"},[t("p",[this._v("create_chile")])])}]};var r=n("VU/8")({name:"CreateChild"},i,!1,function(e){n("Syxk")},"data-v-41eb05ea",null);t.default=r.exports},Syxk:function(e,t){}});
+//# sourceMappingURL=1.3974f942fe6be5259905.js.map
