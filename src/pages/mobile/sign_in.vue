@@ -1,13 +1,18 @@
 <template>
   <div class="container">
-    <div class="bg-banner"></div>
+    <div class="bg-banner"/>
     <div class="from-box">
       <p class="title">请您先注册为AKESO用户，方便您随时查看绑定医生。</p>
       <div class="phone-content">
         <input v-model="phoneNum" class="phone-num border" type="text" placeholder="请输入手机号码">
         <div class="verify-box clearfix">
-          <input class="verify-num border" v-model="verifyNum" type="text" placeholder="请输入验证码">
-          <input v-on:click="sendSmsCode" class="verify-btn" type="button" v-model="btnContent" v-bind="{'disabled':disabled}">
+          <input v-model="verifyNum" class="verify-num border" type="text" placeholder="请输入验证码">
+          <input
+            v-bind="{'disabled':disabled}"
+            v-model="btnContent"
+            class="verify-btn"
+            type= "button"
+            @click= "sendSmsCode">
         </div>
       </div>
     </div>
@@ -19,8 +24,8 @@
 
 <script>
 export default {
-  name: 'child_select',
-  data () {
+  name: 'SignIn',
+  data() {
     return {
       phoneNum: '', // 手机号
       verifyNum: '', // 验证码
@@ -31,7 +36,7 @@ export default {
   },
   methods: {
     //  获取验证码
-    sendSmsCode () {
+    sendSmsCode() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
       var phoneNum = this.phoneNum
       if (!phoneNum) { // 未输入手机号
@@ -49,7 +54,7 @@ export default {
       //   console.log(response.body)
       // })
     },
-    timer () {
+    timer() {
       if (this.time > 0) {
         this.time--
         this.btnContent = this.time + 's后重新获取'

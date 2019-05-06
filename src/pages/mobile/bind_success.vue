@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'bind_success'
+  name: 'BindSuccess'
 }
 </script>
 <style lang="stylus" scoped>

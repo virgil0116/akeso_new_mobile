@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'create_child'
+  name: 'CreateChild'
 }
 </script>
 <style lang="stylus" scoped>

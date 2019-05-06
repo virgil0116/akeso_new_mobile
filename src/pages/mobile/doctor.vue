@@ -6,12 +6,12 @@
       </div>
     </div>
     <div class="info">
-      <div class="name">名字</div>
+      <div class="name">{{ doctor.name }}</div>
       <div class="title">
-        <span class="c-blue"></span>
+        <span class="c-blue">{{ doctor.workingYears }}</span>年
         <span>视光经验</span>
       </div>
-      <div class="details">内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</div>
+      <div class="details">{{ doctor.description }}</div>
     </div>
     <router-link to="/sign_in">
       <button class="button">绑定此视光师</button>
@@ -20,8 +20,33 @@
 </template>
 
 <script>
+import { fetchItem } from '@/api/mobile/doctors'
 export default {
-  name: 'doctor'
+  name: 'Doctor',
+  data() {
+    return {
+      id: this.$route.query.id,
+      doctor: {
+        id: undefined,
+        workingYears: undefined,
+        name: undefined,
+        description: undefined
+      }
+    }
+  },
+  created() {
+    this.getData()
+  },
+  methods: {
+    handleClickBind() {
+      this.$router.push({ path: '/mobile/sign_in', query: { doctor_id: this.id }})
+    },
+    getData() {
+      fetchItem({ id: this.id }).then(response => {
+        this.doctor = response.data
+      })
+    }
+  }
 }
 </script>
 <style lang="stylus" scoped>
