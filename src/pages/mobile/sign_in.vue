@@ -28,12 +28,8 @@
 </template>
 
 <script>
-import { Toast } from 'vux'
 export default {
   name: 'SignIn',
-  components: {
-    Toast
-  },
   data() {
     return {
       phoneNum: '', // 手机号
@@ -55,7 +51,7 @@ export default {
         return
       }
       if (!reg.test(phoneNum)) { // 手机号不合法
-        this.toast('您输入的手机号码不合法，请重新输入')
+        this.toast('手机号不合法')
         return
       }
       this.time = 60
