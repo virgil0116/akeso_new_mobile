@@ -4,9 +4,9 @@
     <div class="from-box">
       <p class="title">请您先注册为AKESO用户，方便您随时查看绑定医生。</p>
       <div class="phone-content">
-        <input v-model="phoneNum" class="phone-num border" type="text" placeholder="请输入手机号码">
+        <input v-model="phoneNum" class="phone-num border" type="number" placeholder="请输入手机号码">
         <div class="verify-box clearfix">
-          <input v-model="verifyNum" class="verify-num" type="text" placeholder="请输入验证码">
+          <input v-model="verifyNum" class="verify-num" type="number" placeholder="请输入验证码">
           <div class="verify-btn">
             <input
               v-bind="{'disabled':disabled}"
@@ -21,19 +21,28 @@
     <router-link to="/child_select">
       <button class="button">登录</button>
     </router-link>
+    <div v-show="toastShow" class="toast">
+      {{ toastText }}
+    </div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vux'
 export default {
   name: 'SignIn',
+  components: {
+    Toast
+  },
   data() {
     return {
       phoneNum: '', // 手机号
       verifyNum: '', // 验证码
       btnContent: '获取验证码', // 获取验证码按钮内文字
       time: 0, // 发送验证码间隔时间
-      disabled: false // 按钮状态
+      disabled: false, // 按钮状态
+      toastShow: false,
+      toastText: ''
     }
   },
   methods: {
@@ -42,11 +51,12 @@ export default {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
       var phoneNum = this.phoneNum
       if (!phoneNum) { // 未输入手机号
-        console.log('请输入手机号码')
+        this.toast('请输入手机号码')
         return
       }
       if (!reg.test(phoneNum)) { // 手机号不合法
-        console.log('您输入的手机号码不合法，请重新输入')
+        this.toast('您输入的手机号码不合法，请重新输入')
+        return
       }
       this.time = 60
       this.timer()
@@ -67,6 +77,14 @@ export default {
         clearTimeout(timer)
         this.disabled = false
       }
+    },
+    toast(str) {
+      const V = this
+      V.toastText = str
+      V.toastShow = true
+      setTimeout(function() {
+        V.toastShow = false
+      }, 1500)
     }
   }
 }
@@ -126,4 +144,24 @@ export default {
     border-radius .1rem
     padding 0 .1rem
     box-sizing: border-box
+  .toast {
+    position: fixed;
+    z-index: 2000;
+    left: 50%;
+    top:5%;
+    transition:all .5s;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+          -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    border-radius: 5px;
+    color:#FFF;
+    background: rgba(17, 17, 17, 0.7);
+    height: 45px;
+    line-height: 45px;
+    padding: 0 15px;
+    max-width: 150px;
+  }
 </style>
