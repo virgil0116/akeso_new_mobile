@@ -6,13 +6,15 @@
       <div class="phone-content">
         <input v-model="phoneNum" class="phone-num border" type="text" placeholder="请输入手机号码">
         <div class="verify-box clearfix">
-          <input v-model="verifyNum" class="verify-num border" type="text" placeholder="请输入验证码">
-          <input
-            v-bind="{'disabled':disabled}"
-            v-model="btnContent"
-            class="verify-btn"
-            type= "button"
-            @click= "sendSmsCode">
+          <input v-model="verifyNum" class="verify-num" type="text" placeholder="请输入验证码">
+          <div class="verify-btn">
+            <input
+              v-bind="{'disabled':disabled}"
+              v-model="btnContent"
+              class="verify"
+              type= "button"
+              @click= "sendSmsCode">
+          </div>
         </div>
       </div>
     </div>
@@ -73,7 +75,7 @@ export default {
   @import '~styles/varibles.styl'
   @import '~styles/mixins.styl'
   .bg-banner
-    height 28vh
+    height 3.8rem
     background url(../../assets/image/sign_up.png) center top no-repeat;
     background-size 100%
   .title
@@ -82,21 +84,33 @@ export default {
   .phone-content
     padding .3rem .2rem .4rem
     text-align left
+  .border
+    &:before
+      border-color #dcdfe6
+    &:after
+      border-color #dcdfe6
   .phone-num,.verify-num
     width 100%
-    height .8rem
-    line-height .8rem
-    border:1px solid #dcdfe6
-    border-radius .1rem
-    box-sizing: border-box
-    padding 0 .1rem
-    margin-bottom: .4rem
+    height 0.8rem
+    line-height 0.8rem
+    position relative
+    z-index 1
+    // margin-top .01rem
+    border-radius 0.1rem
+    padding .2rem .1rem
+    box-sizing border-box
+    border: 1px solid #dcdfe6
+    -webkit-appearance: none;
+    margin-bottom .4rem
   .verify-btn
     height .8rem
     line-height .8rem
     padding 0 .16rem
     margin-left .1rem
     border-radius .1rem
+    background-color #dcdfe6
+  .verify
+    background: transparent;
   .verify-box
     display flex
     flex-direction row
@@ -105,4 +119,11 @@ export default {
     button()
     background $cblue
     margin-top .6rem
+  .border-box
+    width 100%
+    height 0.8rem
+    margin-bottom .4rem
+    border-radius .1rem
+    padding 0 .1rem
+    box-sizing: border-box
 </style>
