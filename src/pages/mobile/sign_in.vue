@@ -18,9 +18,7 @@
         </div>
       </div>
     </div>
-    <router-link to="/child_select">
-      <button class="button">登录</button>
-    </router-link>
+    <button class="button" @click="handleClickLogin">登录</button>
     <div v-show="toastShow" class="toast">
       {{ toastText }}
     </div>
@@ -28,39 +26,54 @@
 </template>
 
 <script>
+import { sendSignUpIn } from '@/api/mobile/codes'
+import { createItem } from '@/api/mobile/users'
 export default {
   name: 'SignIn',
   data() {
     return {
+      doctor_id: this.$route.query.doctor_id,
       phoneNum: '', // 手机号
       verifyNum: '', // 验证码
       btnContent: '获取验证码', // 获取验证码按钮内文字
       time: 0, // 发送验证码间隔时间
       disabled: false, // 按钮状态
       toastShow: false,
-      toastText: ''
+      toastText: '',
+      user_id: undefined
     }
   },
   methods: {
-    //  获取验证码
-    sendSmsCode() {
+    handleClickLogin() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
-      var phoneNum = this.phoneNum
-      if (!phoneNum) { // 未输入手机号
-        this.toast('请输入手机号码')
-        return
-      }
-      if (!reg.test(phoneNum)) { // 手机号不合法
+      if (!reg.test(this.phoneNum)) { // 手机号不合法
         this.toast('手机号不合法')
         return
       }
-      this.time = 60
-      this.timer()
-      // 获取验证码请求
-      // var url = ''
-      // this.$http.post(url, {username: phoneNum}, {emulateJSON: true}).then((response) => {
-      //   console.log(response.body)
-      // })
+      if (this.verifyNum === '') {
+        this.toast('请输入验证码')
+        return
+      }
+      createItem({ phone: this.phoneNum, code: this.verifyNum }).then(response => {
+        this.user_id = response.data.userId
+        this.$router.push({ path: '/child_select', query: { doctor_id: this.doctor_id, user_id: this.user_id }})
+      })
+    },
+    //  获取验证码
+    sendSmsCode() {
+      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
+      if (!this.phoneNum) { // 未输入手机号
+        this.toast('请输入手机号码')
+        return
+      }
+      if (!reg.test(this.phoneNum)) { // 手机号不合法
+        this.toast('手机号不合法')
+        return
+      }
+      sendSignUpIn({ phone: this.phoneNum }).then(response => {
+        this.time = 60
+        this.timer()
+      })
     },
     timer() {
       if (this.time > 0) {
