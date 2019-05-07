@@ -13,9 +13,7 @@
       </div>
       <div class="details">{{ doctor.description }}</div>
     </div>
-    <router-link to="/sign_in">
-      <button class="button">绑定此视光师</button>
-    </router-link>
+    <button class="button" @click="handleClickBind">绑定此视光师</button>
   </div>
 </template>
 
@@ -39,7 +37,7 @@ export default {
   },
   methods: {
     handleClickBind() {
-      this.$router.push({ path: '/mobile/sign_in', query: { doctor_id: this.id }})
+      this.$router.push({ path: '/sign_in', query: { doctor_id: this.id }})
     },
     getData() {
       fetchItem({ id: this.id }).then(response => {
