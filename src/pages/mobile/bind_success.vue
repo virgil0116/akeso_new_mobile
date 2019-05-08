@@ -2,28 +2,33 @@
   <div class="container">
     <div class="header">
       <p>儿童眼视光专家</p>
-      <a href="###">下载APP</a>
+      <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid">
+        下载APP
+      </a>
     </div>
     <!--<div>
       <msg :title="11" :description="description" :icon="icon"/>
     </div>-->
     <div class="child">
-      <p class="child-name">孩子名字</p>
-      <p class="info">孩子的信息</p>
+      <p class="child-name">{{ user.name }}</p>
+      <p class="info"><span style="margin-right: 10px;">{{ user.genderCn }}</span>{{ user.age }}岁</p>
     </div>
     <div class="doctor border">
       <h3 class="title">专属视光师</h3>
       <div class="img">
         <img src="" alt="">
       </div>
-      <p class="name">名字</p>
-      <a href="###" class="btn">联系视光师</a>
+      <p class="name">{{ user.doctorName }}</p>
+      <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid" class="btn">
+        联系视光师
+      </a>
     </div>
   </div>
 </template>
 
 <script>
 import { Msg } from 'vux'
+import { fetchItem } from '@/api/mobile/children'
 export default {
   name: 'BindSuccess',
   components: {
@@ -32,10 +37,20 @@ export default {
   data() {
     return {
       description: 'msg description',
-      icon: ''
+      icon: '',
+      child_id: this.$route.query.child_id,
+      user: {}
     }
   },
+  created() {
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetchItem({ child_id: this.child_id }).then(response => {
+        this.user = response.data
+      })
+    },
     changeIcon() {
       if (!this.icon || this.icon === 'success') {
         this.icon = 'warn'

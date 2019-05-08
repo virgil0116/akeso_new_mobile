@@ -12,6 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
+        // target: 'http://staging.akeso.com.cn/',  //目标接口域名
         target: 'http://localhost:3000',
         pathRewrite: {
           '^/api': '/api'
