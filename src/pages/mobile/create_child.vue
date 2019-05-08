@@ -2,42 +2,65 @@
   <div class="container">
     <p class="title">我们已用短信方式告诉您登录信息，您还需填写孩子信息，方便医生沟通。</p>
     <group>
-      <x-input title="姓名" name="username" placeholder="请输入姓名" is-type="china-name"/>
+      <x-input v-model="temp.child_name" title="姓名" placeholder="请输入姓名" is-type="china-name"/>
     </group>
     <group label-width="5em">
-      <popup-picker :title="title1" :data="list1" v-model="value1" @on-show="onShow" @on-hide="onHide" @on-change="onChange"/>
+      <popup-radio :title="title1" :options="genderOptions" v-model="temp.gender"/>
     </group>
     <group>
       <datetime
-        v-model="valueDate"
+        v-model="temp.birthday"
         :title="('生日')"
         @on-show="onShowDate"
         @on-hide="onHideDate"
         @on-change="change"/>
     </group>
-    <button class="button">保存</button>
+    <button class="button" @click="handleClickSave">保存</button>
   </div>
 </template>
 
 <script>
-import { Group, XInput, PopupPicker, Datetime } from 'vux'
+import { createItem } from '@/api/mobile/children'
+import { Group, XInput, PopupPicker, PopupRadio, Datetime } from 'vux'
+const genderOptions = [
+  { key: 'male', value: '男' },
+  { key: 'female', value: '女' }
+]
 export default {
   name: 'CreateChild',
   components: {
     Group,
     XInput,
     PopupPicker,
+    PopupRadio,
     Datetime
   },
   data() {
     return {
-      title1: '性别',
-      list1: [['男', '女']],
-      value1: ['男'],
-      valueDate: '2015-05-05'
+      genderOptions,
+      temp: {
+        child_name: undefined,
+        gender: undefined,
+        birthday: undefined,
+        user_id: this.$route.query.user_id,
+        doctor_id: this.$route.query.doctor_id
+      },
+      child_id: undefined,
+      title1: '性别'
     }
   },
   methods: {
+    handleClickSave() {
+      console.log('temp => ', this.temp)
+      if (this.temp.child_name === undefined || this.temp.child_name === '') {
+        return
+      }
+      createItem(this.temp).then(response => {
+        this.child_id = response.data.childId
+        this.$router.push({ path: '/bind_success', query: { child_id: this.child_id }})
+      })
+      // this.$router.push({ path: '/mobile/bind_success' })
+    },
     onChange(val) {
       console.log('val change', val)
     },
