@@ -9,12 +9,12 @@
         <Checklist :options="test" v-model="checked_list" :max="1"/>
       </group>
 
-      <div>
-        <div class="weui-cells weui-cells_checkbox">
+      <group>
+        <div class="-weui-cells weui-cells_checkbox">
           <label
             v-for="item in children"
             :key="item.id"
-            class="weui-cell weui-check_label">
+            :class="item.bindState?'weui-cell weui-check_label b-disabled':'weui-cell weui-check_label'">
             <div class="weui-cell__hd">
               <input
                 :name="item.name"
@@ -24,14 +24,14 @@
                 type="checkbox"
                 class="weui-check"
                 @change="change">
-              <i class="weui-icon-checked vux-checklist-icon-checked"/>
+              <i :class="item.bindState ? 'weui-icon weui_icon_success weui-icon-success' : 'weui-icon-checked vux-checklist-icon-checked'"/>
             </div>
             <div class="weui-cell__bd">
               <p>{{ item.name }} {{ item.doctorName }}</p>
             </div>
           </label>
         </div>
-      </div>
+      </group>
     </div>
     <button class="button" @click="handleClickAdd">创建孩子</button>
     <button class="button" @click="handleClickNext">下一步</button>
@@ -42,13 +42,14 @@
 </template>
 <script>
 import { fetchList, bindDoctor } from '@/api/mobile/children'
-import { Group, CheckIcon, Checklist } from 'vux'
+import { Group, CheckIcon, Checklist, Icon } from 'vux'
 export default {
   name: 'ChildSelect',
   components: {
     Group,
     CheckIcon,
-    Checklist
+    Checklist,
+    Icon
   },
   data() {
     return {
@@ -115,6 +116,9 @@ export default {
   .list >>> .vux-check-icon
     display block
     padding: .2rem .3rem;
+  .b-disabled
+    background darkgray
+    color #ccc
   .header
     padding .6rem .3rem;
     display block

@@ -92,7 +92,7 @@ export default {
     line-height .6rem
   .container >>> .weui-cells
     margin-top -1px
-  .container >>> .weui-label,.container >>> .weui-cell p
+  .container >>> .weui-label,.container >>> .weui-cell p,.container >>> .vux-label
     width 3em !important
   .button
     button()
