@@ -8,8 +8,8 @@
     <div class="info">
       <div class="name">{{ doctor.name }}</div>
       <div class="title">
-        <span class="c-blue">{{ doctor.workingYears }}</span>年
-        <span>视光经验</span>
+        <!--<span class="c-blue">{{ doctor.workingYears }}</span>年-->
+        <!--<span>视光经验</span>-->
       </div>
       <div class="details">{{ doctor.description }}</div>
     </div>
