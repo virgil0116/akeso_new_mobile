@@ -122,6 +122,8 @@ export default {
       text-align center
       margin-top .4rem
       display block
+      position relative
+      z-index 222
   .border
     &:before
       border-color #dcdfe6
