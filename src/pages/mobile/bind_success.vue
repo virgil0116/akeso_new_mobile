@@ -14,13 +14,13 @@
       <p class="info"><span style="margin-right: 10px;">{{ user.genderCn }}</span>{{ user.age }}岁</p>
     </div>
     <div class="doctor border">
-      <h3 class="title">专属视光师</h3>
+      <h3 class="title">专属管理机构/医生</h3>
       <div class="img">
         <img src="" alt="">
       </div>
       <p class="name">{{ user.doctorName }}</p>
       <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid" class="btn">
-        联系视光师
+        联系医生
       </a>
     </div>
   </div>

@@ -2,11 +2,11 @@
   <div class="container">
     <div class="bg-banner"/>
     <div class="from-box">
-      <p class="title">请您先注册为AKESO用户，方便您随时查看绑定医生。</p>
+      <p class="title">请您输入手机号获取验证码登录后才能查看绑定机构/医生</p>
       <div class="phone-content">
-        <input v-model="phoneNum" class="phone-num border" type="number" placeholder="请输入手机号码">
+        <input ref="input" v-model="phoneNum" class="phone-num border" type="number" placeholder="请输入手机号码" @blur="blur('input')">
         <div class="verify-box clearfix">
-          <input v-model="verifyNum" class="verify-num" type="number" placeholder="请输入验证码">
+          <input ref="input" v-model="verifyNum" class="verify-num" maxlength="6" type="number" placeholder="请输入验证码" @blur="blur('input')">
           <div class="verify-btn">
             <input
               v-bind="{'disabled':disabled}"
@@ -44,6 +44,9 @@ export default {
     }
   },
   methods: {
+    blur(name) {
+      this.$refs[name].scrollIntoView(false)
+    },
     handleClickLogin() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
       if (!reg.test(this.phoneNum)) { // 手机号不合法
