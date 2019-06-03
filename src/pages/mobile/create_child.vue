@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <p class="title">我们已用短信方式告诉您登录信息，您还需填写孩子信息，方便医生沟通。</p>
+    <p class="title">您还需填写孩子信息，方便医生与您几十沟通哟！</p>
     <group>
-      <x-input v-model="temp.child_name" title="姓名" placeholder="请输入姓名" is-type="china-name"/>
+      <x-input v-model="temp.child_name" title="姓名" placeholder="请输入姓名" is-type="china-name" @blur="blur('input')"/>
     </group>
     <group label-width="5em">
       <popup-radio :title="title1" :options="genderOptions" v-model="temp.gender"/>
@@ -50,6 +50,9 @@ export default {
     }
   },
   methods: {
+    blur(name) {
+      this.$refs[name].scrollIntoView(false)
+    },
     handleClickSave() {
       console.log('temp => ', this.temp)
       if (this.temp.child_name === undefined || this.temp.child_name === '') {
