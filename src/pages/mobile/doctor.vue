@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="header-img">
-        <img src="" alt="">
+        <img :src="doctor.avatar?doctor.avatar:avatar" class="img" alt="">
       </div>
     </div>
     <div class="info">
@@ -19,6 +19,7 @@
 
 <script>
 import { fetchItem } from '@/api/mobile/doctors'
+import avatar from '@/assets/image/header.png'
 export default {
   name: 'Doctor',
   data() {
@@ -29,7 +30,8 @@ export default {
         workingYears: undefined,
         name: undefined,
         description: undefined
-      }
+      },
+      avatar: avatar
     }
   },
   created() {
@@ -59,9 +61,12 @@ export default {
   .header-img
     width 2rem
     height 2rem
-    background #000
+    background #fff
     border-radius 50%
     overflow hidden
+  .header-img .img
+    width 100%
+    height 100%
   .info
     padding .4rem;
     color #000
