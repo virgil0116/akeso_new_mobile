@@ -4,9 +4,13 @@
     <div class="from-box">
       <p class="title">请您输入手机号获取验证码登录后才能查看绑定机构/医生</p>
       <div class="phone-content">
-        <input ref="input" v-model="phoneNum" class="phone-num border" type="number" placeholder="请输入手机号码" @blur="blur('input')">
+        <div class="input-group">
+          <input ref="input" v-model="phoneNum" class="phone-num border" type="number" placeholder="请输入手机号码" @blur="blur('input')">
+        </div>
         <div class="verify-box clearfix">
-          <input ref="input" v-model="verifyNum" class="verify-num" maxlength="6" type="number" placeholder="请输入验证码" @blur="blur('input')">
+          <div class="input-group" style="width:100%;">
+            <input ref="input" v-model="verifyNum" class="verify-num" maxlength="6" onkeyup = "this.value=this.value.replace(/[^\d]/g,'')" type="text" placeholder="请输入验证码" @blur="blur('input')">
+          </div>
           <div class="verify-btn">
             <input
               v-bind="{'disabled':disabled}"
@@ -46,6 +50,12 @@ export default {
   methods: {
     blur(name) {
       this.$refs[name].scrollIntoView(false)
+      // if (this.$refs[name].value.length > 6) {
+      //   this.$refs[name].value = this.$refs[name].value.slice(0, 6)
+      // }
+      // if (this.verifyNum.length > 6) {
+      //   this.verifyNum = this.verifyNum.slice(0, 6)
+      // }
     },
     handleClickLogin() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
@@ -112,26 +122,28 @@ export default {
     text-align left
     padding-left .2rem
   .phone-content
-    padding .3rem .2rem .4rem
+    padding .3rem .4rem .4rem
     text-align left
   .border
     &:before
       border-color #dcdfe6
     &:after
       border-color #dcdfe6
+  .input-group{
+    padding .1rem .1rem
+    border-radius 0.1rem
+    border: 1px solid #dcdfe6
+    margin-bottom .4rem
+  }
   .phone-num,.verify-num
     width 100%
-    height 0.8rem
-    line-height 0.8rem
+    height 0.6rem
+    line-height 0.6rem
     position relative
     z-index 1
     // margin-top .01rem
-    border-radius 0.1rem
-    padding .2rem .1rem
-    box-sizing border-box
-    border: 1px solid #dcdfe6
-    -webkit-appearance: none;
-    margin-bottom .4rem
+    // box-sizing border-box
+    // -webkit-appearance: none;
   .verify-btn
     height .8rem
     line-height .8rem

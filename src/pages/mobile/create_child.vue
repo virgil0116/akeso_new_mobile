@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <p class="title">您还需填写孩子信息，方便医生与您几十沟通哟！</p>
+    <p class="title">您还需填写孩子信息，方便医生与您及时沟通哟！</p>
     <group>
       <x-input v-model="temp.child_name" title="姓名" placeholder="请输入姓名" is-type="china-name" @blur="blur('input')"/>
     </group>
