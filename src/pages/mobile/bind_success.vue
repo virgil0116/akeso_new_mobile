@@ -14,9 +14,9 @@
       <p class="info"><span style="margin-right: 10px;">{{ user.genderCn }}</span>{{ user.age }}岁</p>
     </div>
     <div class="doctor border">
-      <h3 class="title">专属管理机构/医生</h3>
+      <h3 class="title">{{ dcotor }}</h3>
       <div class="img">
-        <img src="" alt="">
+        <img :src="avatar" alt="">
       </div>
       <p class="name">{{ user.doctorName }}</p>
       <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid" class="btn">
@@ -29,6 +29,7 @@
 <script>
 import { Msg } from 'vux'
 import { fetchItem } from '@/api/mobile/children'
+import avatar from '@/assets/image/header.png'
 export default {
   name: 'BindSuccess',
   components: {
@@ -39,7 +40,9 @@ export default {
       description: 'msg description',
       icon: '',
       child_id: this.$route.query.child_id,
-      user: {}
+      user: {},
+      dcotor: '',
+      avatar
     }
   },
   created() {
@@ -49,6 +52,7 @@ export default {
     getData() {
       fetchItem({ child_id: this.child_id }).then(response => {
         this.user = response.data
+        this.dcotor = this.$store.state.doctor === 'doctor' ? '医生' : '专属管理机构'
       })
     },
     changeIcon() {
@@ -105,7 +109,6 @@ export default {
       height 1.6rem
       border-radius 50%
       overflow hidden
-      background:#ccc
       display inline-block
       margin .4rem 0
       img

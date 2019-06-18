@@ -44,6 +44,7 @@ export default {
     getData() {
       fetchItem({ id: this.id }).then(response => {
         this.doctor = response.data
+        this.$store.state.doctor = response.data.baseType
       })
     }
   }

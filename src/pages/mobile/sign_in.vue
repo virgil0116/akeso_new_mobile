@@ -9,7 +9,7 @@
         </div>
         <div class="verify-box clearfix">
           <div class="input-group" style="width:100%;">
-            <input ref="input" v-model="verifyNum" class="verify-num" maxlength="6" onkeyup = "this.value=this.value.replace(/[^\d]/g,'')" type="number" placeholder="请输入验证码" @blur="blur('input')">
+            <input ref="input" v-model="verifyNum" class="verify-num" maxlength="6" onkeyup = "this.value=this.value.replace(/[^\d]/g,'')" type="text" placeholder="请输入验证码" @blur="blur('input')">
           </div>
           <div class="verify-btn">
             <input
