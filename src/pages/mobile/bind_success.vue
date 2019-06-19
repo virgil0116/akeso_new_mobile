@@ -16,7 +16,7 @@
     <div class="doctor border">
       <h3 class="title">{{ dcotor }}</h3>
       <div class="img">
-        <img :src="avatar" alt="">
+        <img :src="user.doctorAvatar?user.doctorAvatar:avatar" alt="">
       </div>
       <p class="name">{{ user.doctorName }}</p>
       <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid" class="btn">
@@ -113,6 +113,7 @@ export default {
       margin .4rem 0
       img
         width 100%
+        height 100%
     .name
       font-size .3rem
     .btn

@@ -1,4 +1,4 @@
-(function() {
+export const fastclick = (function() {
   'use strict'
 
   /**
@@ -802,3 +802,4 @@
     window.FastClick = FastClick
   }
 }())
+

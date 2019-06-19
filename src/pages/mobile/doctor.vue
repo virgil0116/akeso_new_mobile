@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <div class="header-img">
-        <img :src="doctor.avatar?doctor.avatar:avatar" class="img" alt="">
+        <img :src="doctor.avatarUrl?doctor.avatarUrl:avatar" class="img" alt="">
       </div>
     </div>
     <div class="info">
