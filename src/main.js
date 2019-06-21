@@ -6,7 +6,7 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'babel-polyfill'
 import fastClick from 'fastclick'
-import VConsole from 'vconsole/dist/vconsole.min.js'
+// import VConsole from 'vconsole/dist/vconsole.min.js'
 import store from './store'
 import 'styles/reset.css'
 import 'styles/border.css'
@@ -28,7 +28,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  vConsole,
   components: { App },
   template: '<App/>'
 })
