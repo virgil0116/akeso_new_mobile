@@ -17,7 +17,7 @@ Vue.config.productionTip = false
 
 // fastClick.attach(document.body)
 Vue.use(VueAwesomeSwiper)
-const vConsole = new VConsole()
+// const vConsole = new VConsole()
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function() {
     fastClick.attach(document.body)
