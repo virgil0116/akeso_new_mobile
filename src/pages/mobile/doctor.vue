@@ -11,6 +11,9 @@
         <!--<span class="c-blue">{{ doctor.workingYears }}</span>年-->
         <!--<span>视光经验</span>-->
       </div>
+      <div v-if="doctor.serviceNames !== undefined && doctor.serviceNames.length > 0 ? 1 : 0" class="details details-span">
+        <span>业务擅长：</span><span v-for="(item, i) in doctor.serviceNames" :key="i">{{ item }}；</span>
+      </div>
       <div class="details">{{ doctor.description }}</div>
     </div>
     <button class="button" @click="handleClickBind">绑定此视光师</button>
@@ -82,6 +85,8 @@ export default {
     font-size .3rem
     line-height .46rem
     text-align left
+  .details-span
+    padding-bottom .3rem
   .button
     width 60%
     height .8rem
