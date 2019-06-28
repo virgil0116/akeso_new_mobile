@@ -16,13 +16,13 @@
       </div>
       <div class="details">{{ doctor.description }}</div>
     </div>
-    <button class="button" @click="handleClickBind">绑定此视光师</button>
+    <button class="button" @click="handleClickBind">{{ btnText }}</button>
   </div>
 </template>
 
 <script>
 import { fetchItem } from '@/api/mobile/doctors'
-import avatar from '@/assets/image/header.png'
+import avatar from '@/assets/image/header-avatar.png'
 export default {
   name: 'Doctor',
   data() {
@@ -34,7 +34,8 @@ export default {
         name: undefined,
         description: undefined
       },
-      avatar: avatar
+      avatar: avatar,
+      btnText: ''
     }
   },
   created() {
@@ -48,6 +49,7 @@ export default {
       fetchItem({ id: this.id }).then(response => {
         this.doctor = response.data
         this.$store.state.doctor = response.data.baseType
+        this.btnText = response.data.baseType === 'doctor' ? '绑定此视光师' : '绑定此机构'
       })
     }
   }

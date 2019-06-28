@@ -29,7 +29,7 @@
 <script>
 import { Msg } from 'vux'
 import { fetchItem } from '@/api/mobile/children'
-import avatar from '@/assets/image/header.png'
+import avatar from '@/assets/image/header-avatar.png'
 export default {
   name: 'BindSuccess',
   components: {
