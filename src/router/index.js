@@ -51,6 +51,10 @@ export const constantRouterMap = [
   {
     path: '/appointment',
     component: () => import('@/pages/reservation_agency/appointment')
+  },
+  {
+    path: '/time',
+    component: () => import('@/pages/reservation_agency/time')
   }
 ]
 

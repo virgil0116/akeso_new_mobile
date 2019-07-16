@@ -19,12 +19,19 @@
       <form bindsubmit="formSubmit" bindreset="formReset">
         <div class="user-list">
           <span class="left-tit">手机号码:</span>
-          <input class="input-span c-bule" type="number" maxlength="11">
-          <span class="code">哈哈</span>
+          <input v-model="phoneNum" class="input-span c-bule" type="number" maxlength="11">
+          <span class="code">
+            <input
+              v-bind="{'disabled':disabled}"
+              v-model="btnContent"
+              class="verify"
+              type= "button"
+              @click= "sendSmsCode">
+          </span>
         </div>
         <div class="user-list">
-          <span class="left-tit">验证码:</span>
-          <input class="input-span c-bule" type="number">
+          <span class="left-tit">验 证 码:</span>
+          <input v-model="verifyNum" class="input-span c-bule" maxlength="6" onkeyup = "this.value=this.value.replace(/[^\d]/g,'')" type="text" placeholder="请输入验证码" @blur="blur('input')">
         </div>
         <div class="user-list">
           <span class="left-tit">孩子姓名:</span>
@@ -33,46 +40,146 @@
         <div class="user-list">
           <span class="left-tit">您孩子的性别：</span>
           <div class="child-list">
-            <div class="">
-              <div class="checked-box"/>
-            </div>
-            <span>男</span>
+            <checklist
+              :options="commonList"
+              :max="1"
+              @on-change="changeCheckList"/>
           </div>
         </div>
         <div class="user-list">
           <span class="left-tit">您孩子的年龄：</span>
           <select class="age">
-            <option value="1">1</option>
+            <option v-for="(item, index) in age" :key="index" :value="item">{{ item }}</option>
           </select>
           <span class="left-tit">岁</span>
         </div>
         <div class="user-list">
           <span class="left-tit">您要预约的日期：</span>
-          <select class="age">
-            <option value="1">1</option>
-          </select>
-          <span class="left-tit">时间：</span>
-          <select class="age">
-            <option value="1">1</option>
-          </select>
+          <datetime
+            :hour-list="['09', '10', '11', '12', '13', '14', '15', '16', '17', '18']"
+            title=""
+            class="datetime"
+            format="YYYY-MM-DD HH:mm"
+            @on-change="change" />
         </div>
         <div class="btn-box">
           <button class="btn" formType="submit">确认预约</button>
         </div>
       </form>
     </div>
+    <div v-show="toastShow" class="toast">
+      {{ toastText }}
+    </div>
   </div>
 </template>
 
 <script>
+import { Datetime, Checklist } from 'vux'
 import locationIcon from '@/assets/image/location_hospitals.png'
 import avatar from '@/assets/image/header-avatar.png'
 export default {
   name: 'MakeAppointment',
+  components: {
+    Datetime,
+    Checklist
+  },
   data() {
     return {
       locationIcon,
-      avatar
+      avatar,
+      phoneNum: '', // 手机号
+      verifyNum: '', // 验证码
+      btnContent: '获取验证码', // 获取验证码按钮内文字
+      time: 0, // 发送验证码间隔时间
+      disabled: false, // 按钮状态
+      toastShow: false,
+      toastText: '',
+      dayTime: '2019-07-01',
+      formatValueFunction(val) {
+        return val.replace(/-/g, '$')
+      },
+      commonList: [{ key: 'male', value: '男' }, { key: 'female', value: '女' }],
+      radioValue: '',
+      age: Array.apply(null, Array(40)).map(function(item, i) {
+        return i
+      }), // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+      radioData: [
+        {
+          value: '男',
+          name: 'male'
+        },
+        {
+          value: '女',
+          name: 'female'
+        }
+      ]
+    }
+  },
+  methods: {
+    blur(name) {
+      this.$refs[name].scrollIntoView(false)
+    },
+    getRadioVal(value) {
+      console.log(value)
+    },
+    change(date) {
+      console.log('change', date)
+    },
+    changeCheckList(value) {
+      console.log(value)
+    },
+    handleClickLogin() {
+      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
+      if (!reg.test(this.phoneNum)) { // 手机号不合法
+        this.toast('手机号不合法')
+        return
+      }
+      if (this.verifyNum === '') {
+        this.toast('请输入验证码')
+        return
+      }
+      // createItem({ phone: this.phoneNum, code: this.verifyNum }).then(response => {
+      //   this.user_id = response.data.userId
+      //   this.$router.push({ path: '/child_select', query: { doctor_id: this.doctor_id, user_id: this.user_id }})
+      // })
+    },
+    //  获取验证码
+    sendSmsCode() {
+      var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
+      if (!this.phoneNum) { // 未输入手机号
+        this.toast('请输入手机号码')
+        return
+      }
+      if (!reg.test(this.phoneNum)) { // 手机号不合法
+        this.toast('手机号不合法')
+        return
+      }
+      this.time = 60
+      this.timer()
+      // sendSignUpIn({ phone: this.phoneNum }).then(response => {
+      //   this.time = 60
+      //   this.timer()
+      // })
+    },
+    timer() {
+      if (this.time > 0) {
+        this.time--
+        this.btnContent = this.time + 's后重新获取'
+        this.disabled = true
+        var timer = setTimeout(this.timer, 1000)
+      } else if (this.time === 0) {
+        this.btnContent = '获取验证码'
+        clearTimeout(timer)
+        this.disabled = false
+      }
+    },
+    toast(str) {
+      const V = this
+      V.toastText = str
+      V.toastShow = true
+      setTimeout(function() {
+        V.toastShow = false
+      }, 1500)
     }
   }
 }
@@ -154,8 +261,9 @@ export default {
   align-items:center;
   height:.7rem;
   border-bottom:1px solid #f5f5f5;
-  font-size:.28rem;
+  font-size:.36rem;
   box-sizing:border-box;
+  padding-left: .5rem;
 }
 .picker{
   width:7.8rem;
@@ -184,6 +292,18 @@ input{
   padding: 0 .3rem;
   width:100%;
 }
+select{
+  height:40px;
+  appearance: none;
+  border:none;
+  font-size:18px;
+  padding:0px 10px;display:block;width:100%;
+  -webkit-box-sizing:border-box;
+  box-sizing:border-box;
+  background-color: #FFFFFF;
+  color:#333333;
+  border-radius:4px;
+}
 .date-picker{
   width: 2rem;
   height: .7rem;
@@ -199,7 +319,6 @@ input{
 .child-list{
   display: flex;
   flex-direction: row;
-  padding-top: .2rem;
   margin-left: .1rem;
   margin-right: .4rem;
 }
@@ -220,6 +339,19 @@ input{
 .checked{
   border:2px solid #27aeff;
 }
+.child-list >>> .weui-cells{
+  display: flex;
+}
+.child-list >>> .weui-cell{
+  padding:6px 15px;
+}
+.child-list >>> .weui-cells:after,.child-list >>> .weui-cells:before,.user-list >>> .weui-cell:before{
+  border:none;
+  border-top:none;
+}
+.child-list >>> .weui-cell__bd{
+  margin-top: .06rem
+}
 .checked .checked-box{
   width:100%;
   height:100%;
@@ -232,9 +364,16 @@ input{
 .btn-box{
   width: 100%;
   position: fixed;
-  bottom: 0;
+  bottom: .5rem;
   left: 0;
   z-index: 9999999;
+}
+.btn{
+  background-color:#27adff;
+  color:#fff;
+  padding: .1rem 1rem;
+  border-radius: 4px;
+  font-size: .4rem;
 }
 page{
   height: 100%;
@@ -259,5 +398,40 @@ page{
 .modal-footer-content span{
   font-size: .32rem;
 }
-
+.verify{
+  background: transparent;
+  border:none;
+}
+.radio{
+  width: 20px;
+  margin-left: .4rem
+}
+.datetime{
+  width:100%;
+  border-bottom: 1px solid #F6F6F6;
+}
+.user-list >>> .vux-datetime-value{
+    text-align: left;
+    color: #000;
+}
+.toast {
+    position: fixed;
+    z-index: 2000;
+    left: 50%;
+    top:5%;
+    transition:all .5s;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+          -o-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%);
+    text-align: center;
+    border-radius: 5px;
+    color:#FFF;
+    background: rgba(17, 17, 17, 0.7);
+    height: 45px;
+    line-height: 45px;
+    padding: 0 15px;
+    max-width: 150px;
+  }
 </style>
