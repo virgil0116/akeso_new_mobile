@@ -4,7 +4,7 @@ export function merchants(query) {
   return request({
     url: '/api/open/merchants',
     method: 'GET',
-    data: query
+    params: query
   })
 }
 
