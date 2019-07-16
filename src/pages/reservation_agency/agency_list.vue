@@ -1,44 +1,119 @@
 <template>
-  <div>
-    <div class="item-hospitals">
-      <img :src="headerIcon" class="hospitals-icon">
-      <div class="hospitals-info">
-        <div class="hospitals-name">北京美尔目医院眼健康管理中心</div>
-        <div class="hospitals-title">
-          <span class="orange">视光中心</span>
-          <span>预约量  {{ 1 }}</span>
-        </div>
-        <div class="address">
-          <img :src="locationIcon" class="address-icon">
-          <span class="address-tit">北京市通州区通朝大街13号院1号楼</span>
+  <div class="container-list">
+    <LoadMore v-if="result" :enable-load-more="enableLoadMore" :on-load-more="onLoadMore">
+      <div v-for="item in listData" :key="item.id" class="item-hospitals" @click="handleClick(item.id)">
+        <img :src="headerIcon" class="hospitals-icon">
+        <div class="hospitals-info">
+          <div class="hospitals-name">{{ item.name }}</div>
+          <div class="hospitals-title">
+            <span class="orange">{{ item.cate_name }}</span>
+            <span>预约量  {{ item.appoints_count }}</span>
+          </div>
+          <div class="address">
+            <img :src="locationIcon" class="address-icon">
+            <span class="address-tit">{{ item.address? item.address : '暂无' }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </LoadMore>
     <!--<div class="amap-wrapper">
-      <el-amap :vid="'amap-vue'" class="amap-box" />
+      <el-amap :vid=""amap-vue" class="amap-box" />
     </div>-->
+    <div v-if="!result" class="no-data">
+      <div class="no-conent">
+        <img :src="modalfail" class="data-icon">
+        <div class="data-text">您所在的区域暂未开放</div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// import AMap from 'AMap'
-// import { location } from '../../utils/location'
+// import AMap from "AMap"
+// import { location } from "../../utils/location"
 import headerIcon from '@/assets/image/hospitals.png'
 import locationIcon from '@/assets/image/location_hospitals.png'
+import modalfail from '@/assets/image/modalfail.png'
 import avatar from '@/assets/image/header-avatar.png'
+import LoadMore from './components/LoadMore'
+import { merchants } from '@/api/mobile/reservation_agency'
 export default {
   name: 'AngencyList',
+  components: {
+    LoadMore
+  },
   data() {
     return {
       headerIcon: headerIcon,
       locationIcon: locationIcon,
-      avatar: avatar
+      avatar: avatar,
+      modalfail: modalfail,
+      listData: [],
+      page: 0,
+      enableLoadMore: true,
+      result: true
+    }
+  },
+  created() {
+    // this.getMerchants()
+  },
+  mounted() {
+    this.getMerchants()
+  },
+  methods: {
+    onLoadMore(done) {
+      setTimeout(() => {
+        if (!this.enableLoadMore) {
+          return
+        }
+        this.page = this.page + 1
+        console.log('加载更多')
+        // this.getMerchants()
+        // done()
+      }, 200)
+    },
+    getMerchants() {
+      const reqData = {
+        location_name: '北京'
+      }
+      merchants(reqData).then((res) => {
+        if (res.data.length === 0) {
+          this.result = false
+        }
+        if (res.data.length < 10) {
+          console.log(111111111)
+          this.enableLoadMore = false
+        }
+        this.listData = this.listData.concat(res.data)
+      })
+    },
+    handleClick(id) {
+      console.log(id)
+      var data = { }
+      for (var item in this.listData) {
+        if (this.listData[item].id === id) {
+          data = {
+            name: this.listData[item].name,
+            cate_name: this.listData[item].cate_name,
+            appoints_count: this.listData[item].appoints_count,
+            address: this.listData[item].address
+          }
+        }
+      }
+      this.$router.push({ name: 'appointment', query: { data: JSON.stringify(data) }})
     }
   }
 }
 </script>
 
 <style scoped>
+  .container-list {
+    position: relative;
+    display: flex;
+    height: 100%;
+    -webkit-box-orient: vertical;
+    flex-direction: column;
+  }
   .item-hospitals{
     display: flex;
     flex-direction: row;
@@ -69,7 +144,7 @@ export default {
     flex-direction: row;
     margin-top: 0.05rem;
   }
-  .hospitals-title text.orange{
+  .hospitals-title span.orange{
     color: #f5a623;
     margin-right: .3rem;
   }
@@ -101,5 +176,23 @@ export default {
   }
   .amap-demo {
     height: 300px;
+  }
+  .no-data{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .no-conent{
+    text-align: center;
+    margin-top: -170rpx;
+  }
+  .data-icon{
+    width: 460rpx;
+    height: 400rpx;
+  }
+  .data-text{
+    font-size: 30rpx;
   }
 </style>

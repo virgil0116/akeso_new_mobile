@@ -41,6 +41,9 @@ export const constantRouterMap = [
   {
     path: '/agency_list',
     name: 'angency_list',
+    meta: {
+      keepAlive: false // 不需要被缓存
+    },
     component: () => import('@/pages/reservation_agency/agency_list')
   },
   {
@@ -50,11 +53,16 @@ export const constantRouterMap = [
   },
   {
     path: '/appointment',
+    name: 'appointment',
+    meta: {
+      keepAlive: false // 不需要被缓存
+    },
     component: () => import('@/pages/reservation_agency/appointment')
   },
   {
-    path: '/time',
-    component: () => import('@/pages/reservation_agency/time')
+    path: '/successful_reservation',
+    name: 'successful_reservation',
+    component: () => import('@/pages/reservation_agency/successful_reservation')
   }
 ]
 

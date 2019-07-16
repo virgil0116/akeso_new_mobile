@@ -33,7 +33,7 @@ service.interceptors.response.use(
     console.log('res : ', res)
     if (res.status !== 200) {
       console.log(res.message)
-      return Promise.reject('error')
+      return Promise.reject(res.message)
     } else {
       return response.data
     }
