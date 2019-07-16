@@ -37,6 +37,20 @@ export const constantRouterMap = [
     path: '/sign_in',
     name: 'sign_in',
     component: () => import('@/pages/mobile/sign_in')
+  },
+  {
+    path: '/agency_list',
+    name: 'angency_list',
+    component: () => import('@/pages/reservation_agency/agency_list')
+  },
+  {
+    path: '/location',
+    name: 'location',
+    component: () => import('@/pages/reservation_agency/location')
+  },
+  {
+    path: '/appointment',
+    component: () => import('@/pages/reservation_agency/appointment')
   }
 ]
 
