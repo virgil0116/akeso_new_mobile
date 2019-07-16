@@ -194,8 +194,8 @@ export default {
   background-color: #f3f3f3;
 }
 .avatar{
-  width: 1.6rem;
-  height: 1.6rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
 }
 .hospital-name{
@@ -363,10 +363,11 @@ select{
 }
 .btn-box{
   width: 100%;
-  position: fixed;
+  padding: 0.5rem 0;
+  /*position: fixed;
   bottom: .5rem;
-  left: 0;
-  z-index: 9999999;
+  left: 0;*/
+  /*z-index: 9999999;*/
 }
 .btn{
   background-color:#27adff;
