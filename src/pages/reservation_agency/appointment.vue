@@ -451,6 +451,9 @@ page{
     text-align: left;
     color: #000;
 }
+.user-list >>> .weui-cell_access .weui-cell__ft:after{
+  opacity: 0;
+}
 .toast {
     position: fixed;
     z-index: 2000;
