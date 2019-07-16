@@ -158,7 +158,7 @@ export default {
   box-sizing:border-box;
 }
 .picker{
-  width:13.8rem;
+  width:7.8rem;
   height:.7rem;
   text-align:center;
   padding:0 .3rem;
