@@ -143,9 +143,7 @@ export default {
       this.datetime = date
     },
     changeCheckList(value) {
-      console.log('nannv-', value[0])
       this.gender = value[0]
-      console.log('男女', this.gender)
     },
     handleClicksubmit() {
       var reg = 11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/ // 手机号正则验证
@@ -161,7 +159,7 @@ export default {
         this.toast('请输入姓名')
         return
       }
-      if (this.gender === '') {
+      if (this.gender === undefined || this.gender === '') {
         this.toast('请选择性别')
         return
       }
@@ -175,7 +173,6 @@ export default {
       }
       appoints({ phone: this.phoneNum, code: this.verifyNum, merchant_id: this.appointmentData.merchant_id, child_name: this.childName, gender: this.gender, age: this.ageNum, date: this.datetime }).then(response => {
         const data = response.data.appoint
-        console.log('data', data)
         this.$router.push({ name: 'successful_reservation', query: { data: JSON.stringify(data) }})
       }, error => {
         this.toast(error)

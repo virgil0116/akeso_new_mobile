@@ -68,8 +68,11 @@ export default {
       const geolocation = new BMap.Geolocation()
       var _this = this
       geolocation.getCurrentPosition(function getinfo(position) {
-        const city = position.address.city // 获取城市信息
+        var city = position.address.city // 获取城市信息
         const province = position.address.province // 获取省份信息
+        if (city.indexOf('市') !== -1) { // 这里是去掉“市”这个字
+          city = city.slice(0, city.indexOf('市'))
+        }
         _this.LocationProvince = province
         _this.LocationCity = city
         _this.getMerchants()
@@ -92,19 +95,18 @@ export default {
       const reqData = {
         location_name: this.LocationCity
       }
+      console.log(reqData)
       merchants(reqData).then((res) => {
         if (res.data.length === 0) {
           this.result = false
         }
         if (res.data.length < 10) {
-          console.log(111111111)
           this.enableLoadMore = false
         }
         this.listData = this.listData.concat(res.data)
       })
     },
     handleClick(id) {
-      console.log(id)
       var data = { }
       for (var item in this.listData) {
         if (this.listData[item].id === id) {
