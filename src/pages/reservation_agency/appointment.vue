@@ -173,9 +173,8 @@ export default {
         return
       }
       appoints({ phone: this.phoneNum, code: this.verifyNum }).then(response => {
-        console.log('提交请求', response)
-        this.user_id = response.data.userId
-        this.$router.push({ path: '/child_select', query: { doctor_id: this.doctor_id, user_id: this.user_id }})
+        const data = response.data.appoint
+        this.$router.push({ name: '/successful_reservation', query: { data: JSON.stringify(data) }})
       }, error => {
         this.toast(error)
       })

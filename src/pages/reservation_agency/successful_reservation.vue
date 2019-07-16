@@ -9,23 +9,23 @@
     <div class="success-body">
       <div class="body-list">
         <span class="left-bar">姓  名</span>
-        <span class="right-bar">徐哈哈</span>
+        <span class="right-bar">{{ appointmentData.child_name }}</span>
       </div>
       <div class="body-list">
         <span class="left-bar">手 机 号</span>
-        <span class="right-bar">12345678911</span>
+        <span class="right-bar">{{ appointmentData.phone }}</span>
       </div>
       <div class="body-list">
         <span class="left-bar">预约时间</span>
-        <span class="right-bar">2019-07-08 09:11</span>
+        <span class="right-bar">{{ appointmentData.date }}</span>
       </div>
       <div class="body-list">
         <span class="left-bar">预约机构</span>
-        <span class="right-bar">北京美尔目医院眼健康管理中心</span>
+        <span class="right-bar">{{ appointmentData.merchant_name }}</span>
       </div>
       <div class="body-list">
         <span class="left-bar">预约地址</span>
-        <span class="right-bar">北京市通州区通朝大街13号院1号楼北京市通州区通朝大街13号院1号楼</span>
+        <span class="right-bar">{{ appointmentData.merchant_address }}</span>
       </div>
     </div>
   </div>
@@ -36,8 +36,12 @@ import successIcon from '@/assets/image/success_icon.png'
 export default {
   data() {
     return {
-      successIcon
+      successIcon,
+      appointmentData: ''
     }
+  },
+  mounted() {
+    this.appointmentData = JSON.parse(this.$route.query.data)
   }
 }
 </script>
