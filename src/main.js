@@ -6,7 +6,7 @@ import router from './router'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'babel-polyfill'
 import fastClick from 'fastclick'
-import VConsole from 'vconsole/dist/vconsole.min.js'
+// import VConsole from 'vconsole/dist/vconsole.min.js'
 import store from './store'
 import 'styles/reset.css'
 import 'styles/border.css'
@@ -16,7 +16,7 @@ import 'swiper/dist/css/swiper.css'
 Vue.config.productionTip = false
 // fastClick.attach(document.body)
 Vue.use(VueAwesomeSwiper)
-const vConsole = new VConsole()
+// const vConsole = new VConsole()
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function() {
     fastClick.attach(document.body)
@@ -27,7 +27,6 @@ new Vue({
   el: '#app',
   router,
   store,
-  vConsole,
   components: { App },
   template: '<App/>'
 })
