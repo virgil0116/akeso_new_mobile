@@ -20,6 +20,6 @@ export function sendCode(query) {
   return request({
     url: '/api/v5/codes/send_appointment_code',
     method: 'GET',
-    data: query
+    params: query
   })
 }

@@ -29,7 +29,7 @@
 </template>
 
 <script>
-// import AMap from "AMap"
+import BMap from 'BMap'
 // import { location } from "../../utils/location"
 import headerIcon from '@/assets/image/hospitals.png'
 import locationIcon from '@/assets/image/location_hospitals.png'
@@ -51,16 +51,32 @@ export default {
       listData: [],
       page: 0,
       enableLoadMore: true,
-      result: true
+      result: true,
+      LocationProvince: '正在定位所在省', // 给渲染层定义一个初始值
+      LocationCity: '正在定位所在市' // 给渲染层定义一个初始值
     }
   },
   created() {
     // this.getMerchants()
   },
   mounted() {
-    this.getMerchants()
+    this.city() // 触发获取城市方法
+    // this.getMerchants()
   },
   methods: {
+    city() { // 定义获取城市方法
+      const geolocation = new BMap.Geolocation()
+      var _this = this
+      geolocation.getCurrentPosition(function getinfo(position) {
+        const city = position.address.city // 获取城市信息
+        const province = position.address.province // 获取省份信息
+        _this.LocationProvince = province
+        _this.LocationCity = city
+        _this.getMerchants()
+      }, function(e) {
+        _this.LocationCity = '定位失败'
+      }, { provider: 'baidu' })
+    },
     onLoadMore(done) {
       setTimeout(() => {
         if (!this.enableLoadMore) {
@@ -74,7 +90,7 @@ export default {
     },
     getMerchants() {
       const reqData = {
-        location_name: '北京'
+        location_name: this.LocationCity
       }
       merchants(reqData).then((res) => {
         if (res.data.length === 0) {
@@ -96,7 +112,8 @@ export default {
             name: this.listData[item].name,
             cate_name: this.listData[item].cate_name,
             appoints_count: this.listData[item].appoints_count,
-            address: this.listData[item].address
+            address: this.listData[item].address,
+            merchant_id: this.listData[item].id
           }
         }
       }

@@ -25,7 +25,7 @@
       </div>
       <div class="body-list">
         <span class="left-bar">预约地址</span>
-        <span class="right-bar">{{ appointmentData.merchant_address }}</span>
+        <span class="right-bar">{{ appointmentData.merchant_address ? appointmentData.merchant_address : '地址暂无' }}</span>
       </div>
     </div>
   </div>

@@ -129,6 +129,7 @@ export default {
   },
   mounted() {
     this.appointmentData = JSON.parse(this.$route.query.data)
+    console.log(this.appointmentData)
   },
   methods: {
     blur(name) {
@@ -172,9 +173,10 @@ export default {
         this.toast('请选择预约时间')
         return
       }
-      appoints({ phone: this.phoneNum, code: this.verifyNum }).then(response => {
+      appoints({ phone: this.phoneNum, code: this.verifyNum, merchant_id: this.appointmentData.merchant_id, child_name: this.childName, gender: this.gender, age: this.ageNum, date: this.datetime }).then(response => {
         const data = response.data.appoint
-        this.$router.push({ name: '/successful_reservation', query: { data: JSON.stringify(data) }})
+        console.log('data', data)
+        this.$router.push({ name: 'successful_reservation', query: { data: JSON.stringify(data) }})
       }, error => {
         this.toast(error)
       })
