@@ -63,6 +63,26 @@ export const constantRouterMap = [
     path: '/successful_reservation',
     name: 'successful_reservation',
     component: () => import('@/pages/reservation_agency/successful_reservation')
+  },
+  {
+    path: '/refractive_archives',
+    name: 'refractive_archives',
+    component: () => import('@/pages/refractive_archives/login')
+  },
+  {
+    path: '/search_child',
+    name: 'search_child',
+    component: () => import('@/pages/refractive_archives/search_child')
+  },
+  {
+    path: '/children',
+    name: 'children',
+    component: () => import('@/pages/refractive_archives/children')
+  },
+  {
+    path: '/child_details',
+    name: 'child_details',
+    component: () => import('@/pages/refractive_archives/child_details')
   }
 ]
 
