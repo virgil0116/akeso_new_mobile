@@ -15,19 +15,23 @@ export default {
     return {
       list: [
         {
-          title: '验光数据',
+          title: '视力检查',
           id: 0
         },
         {
-          title: '视功能检查',
+          title: '旧镜度数',
           id: 1
         },
         {
-          title: '复查验光',
+          title: '电脑验光',
           id: 2
         },
         {
-          title: '眼部检查',
+          title: '小瞳验光',
+          id: 3
+        },
+        {
+          title: '散瞳验光',
           id: 3
         }
       ]
@@ -38,7 +42,7 @@ export default {
       var url = null
       switch (id) {
         case 0:
-          url = 'optometry' // 视功能检查
+          url = 'list_vision' // 视功能检查
           break
       }
       this.$router.push({ name: url, query: { data: JSON.stringify() }})

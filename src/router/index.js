@@ -85,9 +85,49 @@ export const constantRouterMap = [
     component: () => import('@/pages/refractive_archives/child_details')
   },
   {
+    path: '/optometry',
+    name: 'optometry',
+    component: () => import('@/pages/refractive_archives/optometry')
+  },
+  {
     path: '/classification',
     name: 'classification',
     component: () => import('@/pages/refractive_archives/classification')
+  },
+  {
+    path: '/list_optician',
+    name: 'list_optician',
+    component: () => import('@/pages/refractive_archives/list_optician')
+  },
+  {
+    path: '/list_vision',
+    name: 'list_vision',
+    component: () => import('@/pages/refractive_archives/list_vision')
+  },
+  {
+    path: '/list_old_mirror',
+    name: 'list_old_mirror',
+    component: () => import('@/pages/refractive_archives/list_old_mirror')
+  },
+  {
+    path: '/list_computer',
+    name: 'list_computer',
+    component: () => import('@/pages/refractive_archives/list_computer')
+  },
+  {
+    path: '/list_hitomi',
+    name: 'list_hitomi',
+    component: () => import('@/pages/refractive_archives/list_hitomi')
+  },
+  {
+    path: '/list_mydriasis',
+    name: 'list_mydriasis',
+    component: () => import('@/pages/refractive_archives/list_mydriasis')
+  },
+  {
+    path: '/list_reverberation',
+    name: 'list_reverberation',
+    component: () => import('@/pages/refractive_archives/list_reverberation')
   }
 ]
 
