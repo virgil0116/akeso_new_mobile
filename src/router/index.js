@@ -83,6 +83,11 @@ export const constantRouterMap = [
     path: '/child_details',
     name: 'child_details',
     component: () => import('@/pages/refractive_archives/child_details')
+  },
+  {
+    path: '/classification',
+    name: 'classification',
+    component: () => import('@/pages/refractive_archives/classification')
   }
 ]
 

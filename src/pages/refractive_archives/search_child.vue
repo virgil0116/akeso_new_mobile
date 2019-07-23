@@ -12,14 +12,8 @@
         @on-cancel="onCancel"
         @on-submit="onSubmit" />
       <div class="list-top">
-        <group>
-          <p class="list" @click="handleList(1)">孩子列表</p>
-        </group>
-        <group>
-          <p class="list">孩子列表</p>
-        </group>
-        <group>
-          <p class="list">孩子列表</p>
+        <group v-for="(item, index) in children_list" :key="index">
+          <p class="list" @click="handleList(1)">{{ item.name }}</p>
         </group>
       </div>
     </div>
@@ -37,7 +31,18 @@ export default {
   data() {
     return {
       results: [],
-      value: ''
+      value: '',
+      children_list: [
+        {
+          name: '孩子1'
+        },
+        {
+          name: '孩子2'
+        },
+        {
+          name: '孩子3'
+        }
+      ]
     }
   },
   methods: {
