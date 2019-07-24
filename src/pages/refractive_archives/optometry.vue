@@ -32,7 +32,7 @@ export default {
         },
         {
           title: '散瞳验光',
-          id: 3
+          id: 4
         }
       ]
     }
@@ -46,6 +46,15 @@ export default {
           break
         case 1:
           url = 'list_old_mirror' // 旧镜度数
+          break
+        case 2:
+          url = 'list_computer' // 电脑验光
+          break
+        case 3:
+          url = 'list_hitomi' // 小瞳综合
+          break
+        case 4:
+          url = 'list_mydriasis' // 散瞳验光
           break
       }
       this.$router.push({ name: url, query: { data: JSON.stringify() }})
