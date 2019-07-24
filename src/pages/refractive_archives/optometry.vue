@@ -44,6 +44,9 @@ export default {
         case 0:
           url = 'list_vision' // 视功能检查
           break
+        case 1:
+          url = 'list_old_mirror' // 旧镜度数
+          break
       }
       this.$router.push({ name: url, query: { data: JSON.stringify() }})
     }
