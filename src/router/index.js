@@ -133,6 +133,26 @@ export const constantRouterMap = [
     path: '/review',
     name: 'review',
     component: () => import('@/pages/refractive_archives/review')
+  },
+  {
+    path: '/eye_examination',
+    name: 'eye_examination',
+    component: () => import('@/pages/refractive_archives/eye_examination')
+  },
+  {
+    path: '/eye_objective_Int_pressure',
+    name: 'eye_objective_Int_pressure',
+    component: () => import('@/pages/refractive_archives/eye_objective_Int_pressure')
+  },
+  {
+    path: '/eye_objective_Bio_parameters',
+    name: 'eye_objective_Bio_parameters',
+    component: () => import('@/pages/refractive_archives/eye_objective_Bio_parameters')
+  },
+  {
+    path: '/eye_objective_tear',
+    name: 'eye_objective_tear',
+    component: () => import('@/pages/refractive_archives/eye_objective_tear')
   }
 ]
 
