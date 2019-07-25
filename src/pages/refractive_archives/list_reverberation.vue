@@ -69,12 +69,12 @@
           <selector :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
-          <span class="left-bar">录入屈光档案医生的名字</span>
+          <span class="left-bar">瞳距PD （ L ）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">瞳距PD （ L ）</span>
-          <input type="number" class="input-group-lg" >
+          <span class="left-bar">录入屈光档案医生的名字</span>
+          <input type="text" class="input-group-lg" >
         </li>
       </ul>
       <button class="btn btn-margin">确 认 添 加</button>
