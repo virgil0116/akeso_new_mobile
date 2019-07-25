@@ -128,6 +128,11 @@ export const constantRouterMap = [
     path: '/list_reverberation',
     name: 'list_reverberation',
     component: () => import('@/pages/refractive_archives/list_reverberation')
+  },
+  {
+    path: '/review',
+    name: 'review',
+    component: () => import('@/pages/refractive_archives/review')
   }
 ]
 

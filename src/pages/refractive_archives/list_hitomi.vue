@@ -15,19 +15,19 @@
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">棱镜 △</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">底向Base</span>
@@ -42,19 +42,19 @@
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">棱镜 △</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">底向Base</span>

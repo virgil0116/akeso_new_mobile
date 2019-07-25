@@ -15,30 +15,30 @@
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">左眼OS</h3>
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="text" class="input-group-lg" >
+          <input type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">录入屈光档案医生的名字</span>
