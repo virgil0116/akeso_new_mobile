@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <ul class="list-ul">
+      <h3 class="title">眼部检查客观</h3>
       <li v-for="(item, index) in list" :key="index" @click="handleClick(item.id)">
         <span>{{ item.title }}</span>
         <span class="icongengduo iconfont"/>
@@ -14,21 +15,25 @@ export default {
   data() {
     return {
       list: [
+        // {
+        //   title: '眼部检查主观',
+        //   id: 0
+        // },
+        // {
+        //   title: '眼部检查客观',
+        //   id: 1
+        // },
         {
-          title: '验光数据',
+          title: '眼压',
           id: 0
         },
         {
-          title: '视功能检查',
+          title: '眼部生物学参数检查',
           id: 1
         },
         {
-          title: '复查验光',
+          title: '泪液检查',
           id: 2
-        },
-        {
-          title: '眼部检查',
-          id: 3
         }
       ]
     }
@@ -38,13 +43,13 @@ export default {
       var url = null
       switch (id) {
         case 0:
-          url = 'optometry' // 视功能检查
+          url = 'eye_objective_Int_pressure' // 眼压
+          break
+        case 1:
+          url = 'eye_objective_Bio_parameters' // 眼部生物学参数
           break
         case 2:
-          url = 'review' // 复查验光
-          break
-        case 3:
-          url = 'eye_examination' // 眼部检查
+          url = 'eye_objective_tear' // 泪液检查
           break
       }
       this.$router.push({ name: url, query: { data: JSON.stringify() }})
@@ -68,6 +73,16 @@ export default {
   justify-content: space-between;
   align-content: center;
   border-bottom: 1px solid $bColor;
+}
+.title{
+  font-size: .36rem;
+  color: $bgBlueColor;
+  padding-left: .1rem;
+  border-left: 4px solid $bgBlueColor;
+  text-align: left;
+  margin-top: .14rem;
+  margin-bottom: .2rem;
+  margin-left: .2rem;
 }
 </style>
 

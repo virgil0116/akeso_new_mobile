@@ -1,4 +1,5 @@
 <template>
+  <!--主观-->
   <div class="container">
     <ul class="list-ul">
       <li v-for="(item, index) in list" :key="index" @click="handleClick(item.id)">
@@ -15,20 +16,12 @@ export default {
     return {
       list: [
         {
-          title: '验光数据',
+          title: '眼部检查主观',
           id: 0
         },
         {
-          title: '视功能检查',
+          title: '眼部检查客观',
           id: 1
-        },
-        {
-          title: '复查验光',
-          id: 2
-        },
-        {
-          title: '眼部检查',
-          id: 3
         }
       ]
     }
@@ -38,13 +31,10 @@ export default {
       var url = null
       switch (id) {
         case 0:
-          url = 'optometry' // 视功能检查
+          url = 'list_reverberation' // 小瞳复光
           break
-        case 2:
-          url = 'review' // 复查验光
-          break
-        case 3:
-          url = 'eye_examination' // 眼部检查
+        case 1:
+          url = 'list_optician' // 配镜处方
           break
       }
       this.$router.push({ name: url, query: { data: JSON.stringify() }})

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>电脑验光</p>
+    <p>眼部生物学参数检查</p>
     <group>
       <datetime
         v-model="date"
@@ -11,33 +11,81 @@
         @on-hide="log('hide', $event)"/>
     </group>
     <div class="container">
-      <h3 class="title">右眼OD</h3>
+      <h3 class="title">右眼</h3>
       <ul class="list">
         <li>
-          <span class="left-bar">球镜 DS</span>
+          <span class="left-bar">眼轴长度（mm）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">柱镜 DC</span>
+          <span class="left-bar">角膜平坦曲率（D）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">轴向 AX</span>
+          <span class="left-bar">角膜陡峭曲率（D）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">角膜平均曲率（D）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">中央角膜厚度（um）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">角膜直径（mm）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">前房深度（mm）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">瞳孔大小（mm）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">晶体厚度（mm）</span>
           <input type="number" class="input-group-lg" >
         </li>
       </ul>
-      <h3 class="title">左眼OS</h3>
+      <h3 class="title">左眼</h3>
       <ul class="list">
         <li>
-          <span class="left-bar">球镜 DS</span>
+          <span class="left-bar">眼轴长度（mm）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">柱镜 DC</span>
+          <span class="left-bar">角膜平坦曲率（D）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">轴向 AX</span>
+          <span class="left-bar">角膜陡峭曲率（D）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">角膜平均曲率（D）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">中央角膜厚度（um）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">角膜直径（mm）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">前房深度（mm）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">瞳孔大小（mm）</span>
+          <input type="number" class="input-group-lg" >
+        </li>
+        <li>
+          <span class="left-bar">晶体厚度（mm）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>

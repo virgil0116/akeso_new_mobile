@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>电脑验光</p>
+    <p>泪液检查</p>
     <group>
       <datetime
         v-model="date"
@@ -11,33 +11,25 @@
         @on-hide="log('hide', $event)"/>
     </group>
     <div class="container">
-      <h3 class="title">右眼OD</h3>
+      <h3 class="title">右眼</h3>
       <ul class="list">
         <li>
-          <span class="left-bar">球镜 DS</span>
+          <span class="left-bar">Schirmer试验（mm）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">柱镜 DC</span>
-          <input type="number" class="input-group-lg" >
-        </li>
-        <li>
-          <span class="left-bar">轴向 AX</span>
+          <span class="left-bar">泪膜破裂时间BUT（S）</span>
           <input type="number" class="input-group-lg" >
         </li>
       </ul>
-      <h3 class="title">左眼OS</h3>
+      <h3 class="title">左眼</h3>
       <ul class="list">
         <li>
-          <span class="left-bar">球镜 DS</span>
+          <span class="left-bar">Schirmer试验（mm）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">柱镜 DC</span>
-          <input type="number" class="input-group-lg" >
-        </li>
-        <li>
-          <span class="left-bar">轴向 AX</span>
+          <span class="left-bar">泪膜破裂时间BUT（S）</span>
           <input type="number" class="input-group-lg" >
         </li>
         <li>
