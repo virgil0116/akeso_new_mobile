@@ -46,10 +46,11 @@ export default {
       this.$router.push({ path: '/sign_in', query: { doctor_id: this.id }})
     },
     getData() {
-      fetchItem({ id: this.id }).then(response => {
+      fetchItem({ id: 1527 }).then(response => {
         this.doctor = response.data
-        this.$store.state.doctor = response.data.baseType
+        this.$store.state.Doctor.doctor = response.data.baseType
         this.btnText = response.data.baseType === 'doctor' ? '绑定此视光师' : '绑定此机构'
+        // console.log('this.$store.state.Doctor.doctor', this.$store.state.Doctor.doctor)
       })
     }
   }
