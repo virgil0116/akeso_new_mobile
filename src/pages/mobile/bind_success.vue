@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <p>儿童眼视光专家</p>
-      <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid">
+      <a href="http://brightkids.orthok.cn/app/">
         下载APP
       </a>
     </div>
@@ -19,7 +19,7 @@
         <img :src="user.doctorAvatar?user.doctorAvatar:avatar" alt="">
       </div>
       <p class="name">{{ user.doctorName }}</p>
-      <a href="http://a.app.qq.com/o/simple.jsp?pkgname=cn.akeso.akesokid" class="btn">
+      <a href="http://brightkids.orthok.cn/app/" class="btn">
         联系医生
       </a>
     </div>
