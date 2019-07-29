@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header">
       <p class="title">您已注册成为AKESO的用户，</p>
-      <p class="title">请您选择您需要绑定医生的孩子。</p>
+      <p class="title">请您选择您需要绑定机构的孩子。</p>
     </div>
     <div class="list">
       <group>

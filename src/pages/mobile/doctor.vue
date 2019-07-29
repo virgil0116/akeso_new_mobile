@@ -48,8 +48,10 @@ export default {
     getData() {
       fetchItem({ id: this.id }).then(response => {
         this.doctor = response.data
-        this.$store.state.doctor = response.data.baseType
+        this.$store.commit('handleDoctor', response.data.baseType)
         this.btnText = response.data.baseType === 'doctor' ? '绑定此视光师' : '绑定此机构'
+        // this.$store.state.Doctor.doctor = response.data.baseType
+        // console.log('this.$store.state.Doctor.doctor', this.$store.state.Doctor.doctor)
       })
     }
   }

@@ -1,12 +1,15 @@
-var defaultDoctor = ''
-try {
-  if (localStorage.doctor) {
-    defaultDoctor = localStorage.doctor
+const doctor = {
+  state: {
+    doctor: ''
+  },
+  mutations: {
+    handleDoctor: function(state, res) {
+      state.doctor = res
+    }
+  },
+  actions: {
+
   }
-} catch (e) {
-  console.log(e)
 }
 
-export default {
-  doctor: defaultDoctor
-}
+export default doctor
