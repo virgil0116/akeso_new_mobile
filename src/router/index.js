@@ -72,6 +72,9 @@ export const constantRouterMap = [
   {
     path: '/search_child',
     name: 'search_child',
+    meta: {
+      requireAuth: true // 添加该字段，表示进入这个路由是需要登录的
+    },
     component: () => import('@/pages/refractive_archives/search_child')
   },
   {
@@ -153,6 +156,26 @@ export const constantRouterMap = [
     path: '/eye_objective_tear',
     name: 'eye_objective_tear',
     component: () => import('@/pages/refractive_archives/eye_objective_tear')
+  },
+  {
+    path: '/visual',
+    name: 'visual',
+    component: () => import('@/pages/refractive_archives/visual')
+  },
+  {
+    path: '/visual_five_list',
+    name: 'visual_five_list',
+    component: () => import('@/pages/refractive_archives/visual_five_list')
+  },
+  {
+    path: '/visual_remote',
+    name: 'visual_remote',
+    component: () => import('@/pages/refractive_archives/visual_remote')
+  },
+  {
+    path: '/visual_little_remote',
+    name: 'visual_little_remote',
+    component: () => import('@/pages/refractive_archives/visual_little_remote')
   }
 ]
 

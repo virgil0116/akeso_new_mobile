@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import Doctor from './doctor'
+import Getters from './getters'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  state: {
-    doctor: '1'
-  }
+const store = new Vuex.Store({
+  modules: {
+    Doctor
+  },
+  Getters
 })
-// actions: {
-//   changeCity (ctx, city) {
-//     ctx.commit('changeCity', city)
+
+export default store
+
+// export default new Vuex.Store({
+//   state: {
+//     doctor: '1'
 //   }
-// },
+// })

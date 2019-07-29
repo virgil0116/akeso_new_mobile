@@ -14,7 +14,7 @@
       <p class="info"><span style="margin-right: 10px;">{{ user.genderCn }}</span>{{ user.age }}岁</p>
     </div>
     <div class="doctor border">
-      <h3 class="title">{{ dcotor }}</h3>
+      <h3 class="title">{{ doctor }}</h3>
       <div class="img">
         <img :src="user.doctorAvatar?user.doctorAvatar:avatar" alt="">
       </div>
@@ -41,7 +41,7 @@ export default {
       icon: '',
       child_id: this.$route.query.child_id,
       user: {},
-      dcotor: '',
+      doctor: '',
       avatar
     }
   },
@@ -52,7 +52,7 @@ export default {
     getData() {
       fetchItem({ child_id: this.child_id }).then(response => {
         this.user = response.data
-        this.dcotor = this.$store.state.doctor === 'doctor' ? '医生' : '专属管理机构'
+        this.doctor = this.$store.state.Doctor.doctor === 'doctor' ? '医生' : '专属管理机构'
       })
     },
     changeIcon() {
