@@ -4,11 +4,17 @@ const user = {
   state: {
     // 存储token
     state: JSON.parse(localStorage.getItem('user') || '{"id": 0, "name": null, "email": null, "avatarUrl": null, "authenticationToken": "", "type": "", "baseType": ""}')
+    // state: {
+    //   id: 0,
+    //   name: undefined,
+    //   email: undefined,
+    //   avatarUrl: undefined,
+    //   authenticationToken: undefined,
+    //   type: undefined,
+    //   baseType: undefined
+    // }
   },
   mutations: {
-    SET_TOKEN: (state, token) => {
-      state.token = token
-    },
     SET_USER_INFO: (state, data) => {
       console.log('updateUserInfo data => ', data)
       localStorage.setItem('user', JSON.stringify(data))
@@ -45,11 +51,16 @@ const user = {
     }
   },
   action: {
-    updateUserInfo({ commit }, data) {
-      return new Promise((resolve, reject) => {
-        commit('SET_USER_INFO', data)
-      })
-    }
+  },
+  getters: {
+    id: state => {
+      return state.id
+    },
+    name: state => state.name,
+    baseType: state => state.baseType,
+    email: state => state.email,
+    avatarUrl: state => state.avatarUrl,
+    authenticationToken: state => state.authenticationToken
   }
 }
 
