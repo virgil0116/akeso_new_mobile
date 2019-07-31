@@ -8,11 +8,11 @@
         <span>{{ child.age }}岁</span>
         <span>{{ child.height }}CM</span>
       </div>
-      <span class="icongengduo iconfont btn-click" />
+      <!--<span class="icongengduo iconfont btn-click" />-->
     </div>
     <div class="list">
       <h3 class="title">共有<span class="c-blue">{{ eye_examinations.length }}</span>份屈光档案的报告</h3>
-      <div v-for="item in eye_examinations" :key="item.id" class="item-list" @click="handleList">
+      <div v-for="item in eye_examinations" :key="item.id" class="item-list" @click="handleList(item.id)">
         <span>{{ item.createFileTime }}   {{ item.name }}</span>
         <span class="icongengduo iconfont" />
       </div>
@@ -76,11 +76,7 @@ export default {
     onCancel() {
       console.log('on cancel')
     },
-    onConfirm(msg) {
-      console.log('on confirm')
-      if (msg) {
-        alert(msg)
-      }
+    onConfirm() {
       createItem({ child_id: this.child.id }).then(res => {
         this.getList()
       })
@@ -95,12 +91,10 @@ export default {
       this.show = true
     },
     handleChild() {
-      console.log(111)
-      // child_details
       this.$router.push({ name: 'child_details', query: { data: JSON.stringify() }})
     },
-    handleList() {
-      this.$router.push({ name: 'classification', query: { data: JSON.stringify() }})
+    handleList(val) {
+      this.$router.push({ name: 'classification', query: { eye_examination_id: val }})
     }
   }
 }
