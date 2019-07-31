@@ -100,8 +100,6 @@ export default {
     handleClickSave() {
       var ppp = this.archive
       ppp.eye_examination_id = this.eye_examination_id
-      console.log('ppp => ', ppp)
-      console.log('this.archive => ', this.archive)
       createItem(ppp).then(res => {
         this.getData()
       })
