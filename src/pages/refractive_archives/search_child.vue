@@ -8,12 +8,13 @@
         position="static"
         top="0px"
         cancel-text=""
+        placeholder="请输入手机号"
         @on-change="getResult"
         @on-cancel="onCancel"
         @on-submit="onSubmit" />
       <div class="list-top">
-        <group v-for="(item, index) in children_list" :key="index">
-          <p class="list" @click="handleList(1)">{{ item.name }}</p>
+        <group v-for="(item, index) in items" :key="index">
+          <p class="list" @click="handleList(item)">{{ item.name }}</p>
         </group>
       </div>
     </div>
@@ -22,6 +23,7 @@
 
 <script>
 import { Search, Group } from 'vux'
+import { searchChild } from '@/api/mobile/children'
 export default {
   name: 'SearchChild',
   components: {
@@ -32,17 +34,7 @@ export default {
     return {
       results: [],
       value: '',
-      children_list: [
-        {
-          name: '孩子1'
-        },
-        {
-          name: '孩子2'
-        },
-        {
-          name: '孩子3'
-        }
-      ]
+      items: []
     }
   },
   methods: {
@@ -52,6 +44,9 @@ export default {
     onSubmit() {
       console.log('ti')
       this.$refs.search.setBlur()
+      searchChild({ phone: this.value }).then(res => {
+        this.items = res.data.items
+      })
     },
     onFocus() {
       console.log('on focus')
@@ -59,9 +54,9 @@ export default {
     onCancel() {
       console.log('on cancel')
     },
-    handleList(id) {
-      console.log(id)
-      this.$router.push({ name: 'children', query: { data: JSON.stringify() }})
+    handleList(val) {
+      console.log(val)
+      this.$router.push({ name: 'children', query: { data: JSON.stringify(val) }})
     }
   }
 }

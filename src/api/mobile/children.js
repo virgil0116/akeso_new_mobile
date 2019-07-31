@@ -31,3 +31,11 @@ export function createItem(query) {
     data: query
   })
 }
+
+export function searchChild(query) {
+  return request({
+    url: '/api/m1/children/search_by_phone',
+    method: 'get',
+    params: query
+  })
+}

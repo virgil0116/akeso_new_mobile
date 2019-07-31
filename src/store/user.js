@@ -3,7 +3,7 @@ import { setToken } from '@/utils/auth'
 const user = {
   state: {
     // 存储token
-    state: JSON.parse(localStorage.getItem('user') || '{"id": 0, "name": null, "email": null, "avatarUrl": null, "authenticationToken": "", "type": "", "baseType": ""}'),
+    state: JSON.parse(localStorage.getItem('user') || '{"id": 0, "name": null, "email": null, "avatarUrl": null, "authenticationToken": "", "type": "", "baseType": ""}')
   },
   mutations: {
     SET_TOKEN: (state, token) => {
