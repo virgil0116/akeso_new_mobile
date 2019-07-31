@@ -27,6 +27,7 @@
 import name from '@/assets/image/refractive_archives/name.png'
 import passwordIcon from '@/assets/image/refractive_archives/password.png'
 import { CheckIcon } from 'vux'
+import { login } from '@/api/refractive_archives/sessions'
 export default {
   components: {
     CheckIcon
@@ -55,13 +56,10 @@ export default {
       var name = this.ruleForm.userName
       // 保存的密码
       var pass = this.ruleForm.password
-      console.log('name===///', name, pass)
       if (name === '' || name == null) {
-        console.log('name', name)
         this.toast('请输入正确的用户名')
         return
       } else if (pass === '' || pass == null) {
-        console.log('pass', pass)
         this.toast('请输入正确的密码')
         return
       }
@@ -70,8 +68,12 @@ export default {
         // 传入账号名，密码，和保存天数3个参数
         this.setCookie(name, pass, 7)
       }
-      this.toast('登录成功')
-      this.$router.push({ name: 'search_child', query: { data: JSON.stringify() }})
+      login({ username: name, password: pass }).then(res => {
+        console.log('res => ', res.data)
+        this.$store.commit('updateUserInfo', res.data)
+        this.toast('登录成功')
+        this.$router.push({ name: 'search_child', query: { data: JSON.stringify() }})
+      })
       // // 接口
       // var url = 'myserver/user/login'
       // this.$http.post(url, this.ruleForm, { emulateJSON: true })
