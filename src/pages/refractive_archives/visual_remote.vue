@@ -71,15 +71,15 @@
       <ul class="list">
         <li>
           <span class="left-bar">OU </span>
-          <input v-model="visual_function_test.regulate_reaction_bcc_ou" type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.acmd_mem_ou" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">R </span>
-          <input v-model="visual_function_test.regulate_reaction_bcc_od" type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.acmd_mem_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">L </span>
-          <input v-model="visual_function_test.regulate_reaction_bcc_os" type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.acmd_mem_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
@@ -114,9 +114,9 @@ export default {
         distant_bo_recovery_point: undefined,
         conv_near_point_break: undefined,
         conv_near_point_recovery: undefined,
-        regulate_reaction_bcc_ou: undefined,
-        regulate_reaction_bcc_od: undefined,
-        regulate_reaction_bcc_os: undefined
+        acmd_mem_ou: undefined,
+        acmd_mem_od: undefined,
+        acmd_mem_os: undefined
       }
     }
   },
