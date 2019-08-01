@@ -3,7 +3,7 @@
     <p>泪液检查</p>
     <group>
       <datetime
-        v-model="date"
+        v-model="objective_ocular_examination.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -15,35 +15,36 @@
       <ul class="list">
         <li>
           <span class="left-bar">Schirmer试验（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.schirmer_test_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">泪膜破裂时间BUT（S）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.schirmer_break_up_time_od" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">左眼</h3>
       <ul class="list">
         <li>
           <span class="left-bar">Schirmer试验（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.schirmer_test_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">泪膜破裂时间BUT（S）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.schirmer_break_up_time_os" type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">录入屈光档案医生的名字</span>
-          <input type="text" class="input-group-lg" >
+          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
+          <!--<input type="text" class="input-group-lg" >-->
         </li>
       </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Datetime, Group } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/objective_ocular_examinations'
 export default {
   components: {
     Datetime,
@@ -51,10 +52,37 @@ export default {
   },
   data() {
     return {
-      date: '2019-06-06'
+      eye_examination_id: undefined,
+      objective_ocular_examination: {
+        examination_time: this.currentDate(),
+        schirmer_test_od: undefined,
+        schirmer_break_up_time_od: undefined,
+        schirmer_test_os: undefined,
+        schirmer_break_up_time_os: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ eye_examination_id: this.eye_examination_id }).then(res => {
+        Object.assign(this.objective_ocular_examination, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.objective_ocular_examination
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        this.getData()
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },

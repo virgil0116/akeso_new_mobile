@@ -3,7 +3,7 @@
     <p>眼部生物学参数检查</p>
     <group>
       <datetime
-        v-model="date"
+        v-model="objective_ocular_examination.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -15,91 +15,92 @@
       <ul class="list">
         <li>
           <span class="left-bar">眼轴长度（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_axial_length_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜平坦曲率（D）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_smooth_corneal_curvature_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜陡峭曲率（D）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_steep_corneal_curvature_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜平均曲率（D）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.corneal_mean_curvature_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">中央角膜厚度（um）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_central_corneal_thickness_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜直径（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_corneal_diameter_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">前房深度（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_anterior_chamber_depth_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">瞳孔大小（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.pupil_size_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">晶体厚度（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_crystal_thickness_od" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">左眼</h3>
       <ul class="list">
         <li>
           <span class="left-bar">眼轴长度（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_axial_length_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜平坦曲率（D）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_smooth_corneal_curvature_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜陡峭曲率（D）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_steep_corneal_curvature_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜平均曲率（D）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.corneal_mean_curvature_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">中央角膜厚度（um）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_central_corneal_thickness_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">角膜直径（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_corneal_diameter_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">前房深度（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_anterior_chamber_depth_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">瞳孔大小（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.pupil_size_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">晶体厚度（mm）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.ocular_biology_crystal_thickness_os" type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">录入屈光档案医生的名字</span>
-          <input type="text" class="input-group-lg" >
+          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
+          <!--<input type="text" class="input-group-lg" >-->
         </li>
       </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Datetime, Group } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/objective_ocular_examinations'
 export default {
   components: {
     Datetime,
@@ -107,10 +108,51 @@ export default {
   },
   data() {
     return {
-      date: '2019-06-06'
+      eye_examination_id: undefined,
+      objective_ocular_examination: {
+        examination_time: this.currentDate(),
+        ocular_biology_axial_length_od: undefined,
+        ocular_biology_smooth_corneal_curvature_od: undefined,
+        ocular_biology_steep_corneal_curvature_od: undefined,
+        corneal_mean_curvature_od: undefined,
+        ocular_biology_central_corneal_thickness_od: undefined,
+        ocular_biology_corneal_diameter_od: undefined,
+        ocular_biology_anterior_chamber_depth_od: undefined,
+        pupil_size_od: undefined,
+        ocular_biology_crystal_thickness_od: undefined,
+        ocular_biology_axial_length_os: undefined,
+        ocular_biology_smooth_corneal_curvature_os: undefined,
+        ocular_biology_steep_corneal_curvature_os: undefined,
+        corneal_mean_curvature_os: undefined,
+        ocular_biology_central_corneal_thickness_os: undefined,
+        ocular_biology_corneal_diameter_os: undefined,
+        ocular_biology_anterior_chamber_depth_os: undefined,
+        pupil_size_os: undefined,
+        ocular_biology_crystal_thickness_os: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ eye_examination_id: this.eye_examination_id }).then(res => {
+        Object.assign(this.objective_ocular_examination, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.objective_ocular_examination
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        this.getData()
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },
