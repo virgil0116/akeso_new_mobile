@@ -3,7 +3,7 @@
     <p>远距离、集合储备力、调节反应</p>
     <group>
       <datetime
-        v-model="date"
+        v-model="visual_function_test.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -15,11 +15,11 @@
       <ul class="list">
         <li>
           <span class="left-bar">隐斜 H：</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_oblique_h" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">隐斜 V:</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_oblique_v" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">散开储备力BI(△)</h3>
@@ -27,15 +27,15 @@
       <ul class="list">
         <li>
           <span class="left-bar">模糊点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_bi_fuzzy_point" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">破裂点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_bi_break_point" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">恢复点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_bi_recovery_point" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">集合储备力BO(△)</h3>
@@ -43,15 +43,15 @@
       <ul class="list">
         <li>
           <span class="left-bar">模糊点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_bo_fuzzy_point" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">破裂点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_bo_break_point" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">恢复点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.distant_bo_recovery_point" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">集合近点NPC(cm)	</h3>
@@ -59,11 +59,11 @@
       <ul class="list">
         <li>
           <span class="left-bar">破裂点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.conv_near_point_break" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">恢复点</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.conv_near_point_recovery" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">调节反应MEM(D)</h3>
@@ -71,28 +71,29 @@
       <ul class="list">
         <li>
           <span class="left-bar">OU </span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.regulate_reaction_bcc_ou" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">R </span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.regulate_reaction_bcc_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">L </span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="visual_function_test.regulate_reaction_bcc_os" type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">录入屈光档案医生的名字</span>
-          <input type="text" class="input-group-lg" >
+          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
+          <!--<input type="text" class="input-group-lg" >-->
         </li>
       </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Datetime, Group } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/visual_function_tests'
 export default {
   components: {
     Datetime,
@@ -100,10 +101,46 @@ export default {
   },
   data() {
     return {
-      date: '2019-06-06'
+      eye_examination_id: undefined,
+      visual_function_test: {
+        examination_time: this.currentDate(),
+        distant_oblique_h: undefined,
+        distant_oblique_v: undefined,
+        distant_bi_fuzzy_point: undefined,
+        distant_bi_break_point: undefined,
+        distant_bi_recovery_point: undefined,
+        distant_bo_fuzzy_point: undefined,
+        distant_bo_break_point: undefined,
+        distant_bo_recovery_point: undefined,
+        conv_near_point_break: undefined,
+        conv_near_point_recovery: undefined,
+        regulate_reaction_bcc_ou: undefined,
+        regulate_reaction_bcc_od: undefined,
+        regulate_reaction_bcc_os: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ eye_examination_id: this.eye_examination_id }).then(res => {
+        Object.assign(this.visual_function_test, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.visual_function_test
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        this.getData()
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },

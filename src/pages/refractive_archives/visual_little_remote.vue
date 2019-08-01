@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>远距离</p>
+    <p>近距离</p>
     <group>
       <datetime
         v-model="date"
