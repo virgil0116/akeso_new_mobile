@@ -3,7 +3,7 @@
     <p>小瞳复光</p>
     <group>
       <datetime
-        v-model="date"
+        v-model="archive.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -15,75 +15,76 @@
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.sphere_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.cylinder_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.axis_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">棱镜 △</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.prism_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">底向Base</span>
-          <selector :options="degreesList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.base_od" :options="degreesList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
           <span class="left-bar">矫正视力</span>
-          <selector :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.corrected_visual_acuity_od" :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
-          <span class="left-bar">瞳距PD （ R ）</span>
-          <input type="number" class="input-group-lg" >
+          <span class="left-bar">瞳距PD （ OU ）</span>
+          <input v-model="archive.pupillary_distance_od" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">左眼OS</h3>
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.sphere_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.cylinder_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.axis_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">棱镜 △</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.prism_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">底向Base</span>
-          <selector :options="degreesList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.base_os" :options="degreesList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
           <span class="left-bar">矫正视力</span>
-          <selector :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.corrected_visual_acuity_os" :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
           <span class="left-bar">瞳距PD （ L ）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.pupillary_distance_os" type="number" class="input-group-lg" >
         </li>
         <li>
-          <span class="left-bar">录入屈光档案医生的名字</span>
-          <input type="text" class="input-group-lg" >
+          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
+          <!--<input type="text" class="input-group-lg" >-->
         </li>
       </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Datetime, Group, Selector } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/archives'
 export default {
   components: {
     Datetime,
@@ -97,10 +98,53 @@ export default {
       medicineList: ['', '托吡卡胺', '环戊通', '阿托品', '其他'],
       value1: '',
       value2: '',
-      date: '2019-06-06'
+      archive: {
+        type: 'callback_examination',
+        examination_time: this.currentDate(),
+        sphere_od: undefined,
+        sphere_os: undefined,
+        cylinder_od: undefined,
+        cylinder_os: undefined,
+        axis_od: undefined,
+        axis_os: undefined,
+        prism_od: undefined,
+        prism_os: undefined,
+        base_od: undefined,
+        base_os: undefined,
+        corrected_visual_acuity_od: undefined,
+        corrected_visual_acuity_os: undefined,
+        mydriatic_drugs: undefined,
+        pupillary_distance_od: undefined,
+        pupillary_distance_os: undefined,
+        pupillary_distance_ou: undefined,
+        wear_distance: undefined,
+        wear_near: undefined,
+        nearly_attached_add: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ type: this.archive.type, eye_examination_id: this.eye_examination_id }).then(res => {
+        // this.archive = res.data
+        Object.assign(this.archive, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.archive
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        this.getData()
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },

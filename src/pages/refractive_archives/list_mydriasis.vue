@@ -101,7 +101,7 @@ export default {
       ],
       eye_examination_id: undefined,
       archive: {
-        type: 'callback_examination',
+        type: 'subjective_refraction',
         examination_time: this.currentDate(),
         sphere_od: undefined,
         sphere_os: undefined,
