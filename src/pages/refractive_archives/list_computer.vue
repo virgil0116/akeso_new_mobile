@@ -40,10 +40,10 @@
           <span class="left-bar">轴向 AX</span>
           <input v-model="archive.axis_os" type="number" class="input-group-lg" >
         </li>
-        <li>
-          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
-          <!--<input v-model="archive.sphere_od" type="text" class="input-group-lg" >-->
-        </li>
+        <!--<li>
+          <span class="left-bar">录入屈光档案医生的名字</span>
+          <input v-model="archive.sphere_od" type="text" class="input-group-lg" >
+        </li>-->
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>

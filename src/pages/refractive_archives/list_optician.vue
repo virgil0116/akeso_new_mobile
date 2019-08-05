@@ -83,10 +83,10 @@
             </div>
           </div>
         </li>
-        <li>
-          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
-          <!--<input type="text" class="input-group-lg" >-->
-        </li>
+        <!--<li>
+          <span class="left-bar">录入屈光档案医生的名字</span>
+          <input type="text" class="input-group-lg" >
+        </li>-->
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>

@@ -48,12 +48,12 @@
           <selector v-model="visual_function_test.worth_4_dots_6m" :options="distanceThirtyT" dir="rtl" title="" class="input-group-select" />
         </li>
       </ul>
-      <ul class="list">
+      <!--<ul class="list">
         <li>
-          <!--<span class="left-bar" @click="handleClick">录入屈光档案医生的名字</span>-->
-          <!--<input type="text" class="input-group-lg" >-->
+          <span class="left-bar" @click="handleClick">录入屈光档案医生的名字</span>
+          <input type="text" class="input-group-lg" >
         </li>
-      </ul>
+      </ul>-->
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
   </div>

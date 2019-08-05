@@ -73,6 +73,9 @@ export default {
         this.$store.commit('updateUserInfo', res.data)
         this.toast('登录成功')
         this.$router.push({ name: 'search_child', query: { data: JSON.stringify() }})
+      }, error => {
+        console.log('这是个错误', error)
+        this.toast(error)
       })
       // // 接口
       // var url = 'myserver/user/login'

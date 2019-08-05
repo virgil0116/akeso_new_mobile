@@ -68,10 +68,10 @@
           <span class="left-bar">散瞳药物</span>
           <selector v-model="archive.mydriatic_drugs" :options="medicineList" dir="rtl" title="" class="input-group-lg" />
         </li>
-        <li>
-          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
-          <!--<input type="text" class="input-group-lg" >-->
-        </li>
+        <!--<li>
+          <span class="left-bar">录入屈光档案医生的名字</span>
+          <input type="text" class="input-group-lg" >
+        </li>-->
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>

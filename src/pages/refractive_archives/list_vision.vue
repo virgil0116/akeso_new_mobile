@@ -55,10 +55,10 @@
           <span class="left-bar" @click="handleClick">裸眼近视力</span>
           <selector :options="selectDataList" v-model="visual_acuity_test.naked_eye_near_visual_acuity_ou" dir="rtl" title="" class="input-group-lg" />
         </li>
-        <li>
-          <!--<span class="left-bar" @click="handleClick">录入屈光档案医生的名字</span>-->
-          <!--<input type="text" class="input-group-lg" >-->
-        </li>
+        <!--<li>
+          <span class="left-bar" @click="handleClick">录入屈光档案医生的名字</span>
+          <input type="text" class="input-group-lg" >
+        </li>-->
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
