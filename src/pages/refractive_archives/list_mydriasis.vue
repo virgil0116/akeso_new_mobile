@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>散瞳验光</p>
-    <group>
+    <p class="tit-name">散瞳验光</p>
+    <group class="tiems">
       <datetime
         v-model="archive.examination_time"
         title= "检查日期"
@@ -75,20 +75,26 @@
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
+    <toast v-model="showPositionValue" :time="1000" :position="position" :text="toastText" :type="text" is-show-mask />
   </div>
 </template>
 
 <script>
-import { Datetime, Group, Selector } from 'vux'
+import { Datetime, Group, Selector, Toast } from 'vux'
 import { createItem, fetItem } from '@/api/refractive_archives/archives'
 export default {
   components: {
     Datetime,
     Group,
-    Selector
+    Selector,
+    Toast
   },
   data() {
     return {
+      showPositionValue: false,
+      position: 'default',
+      toastText: '',
+      text: '',
       degreesList: ['', '0.1', '0.12', '0.15', '0.2', '0.25', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.5', '2.0', '0.08', '0.06', '0.05', '0.04', '0.02', '树指', '手动', '光感', '无光感'],
       selectDataList: ['', '底向in', '底向out', '底向up', '底向down'],
       medicineList: [
@@ -140,7 +146,19 @@ export default {
       var ppp = this.archive
       ppp.eye_examination_id = this.eye_examination_id
       createItem(ppp).then(res => {
-        this.getData()
+        // this.getData()
+        if (res.message === '请求成功' && res.status === 200) {
+          this.showPositionValue = true
+          this.toastText = '提交成功'
+          this.text = 'success'
+          this.timer = setTimeout(() => {
+            this.$router.go(-1)
+          }, 1000)
+        } else {
+          this.showPositionValue = true
+          this.toastText = '提交失败'
+          this.text = 'warn'
+        }
       })
     },
     currentDate() {
@@ -225,5 +243,15 @@ export default {
   .btn{
     btn()
     box-sizing: border-box;
+  }
+  .times >>> .weui-cells ,.times >>> .vux-no-group-title{
+    margin-top: 0;
+  }
+  .tit-name{
+    height: .72rem;
+    line-height: .72rem;
+    font-size: .32rem;
+    color: #fff;
+    background: $bgBlueColor;
   }
 </style>

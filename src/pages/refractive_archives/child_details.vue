@@ -74,7 +74,7 @@
         </div>
       </li>
     </ul>
-    <div class="btn-box">新增屈光档案</div>
+    <!--<div class="btn-box">新增屈光档案</div>-->
   </div>
 </template>
 

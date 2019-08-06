@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>眼部生物学参数检查</p>
-    <group>
+    <p class="tit-name">眼部生物学参数检查</p>
+    <group class="times">
       <datetime
         v-model="objective_ocular_examination.examination_time"
         title= "检查日期"
@@ -95,19 +95,25 @@
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
+    <toast v-model="showPositionValue" :time="1000" :position="position" :text="toastText" :type="text" is-show-mask />
   </div>
 </template>
 
 <script>
-import { Datetime, Group } from 'vux'
+import { Datetime, Group, Toast } from 'vux'
 import { createItem, fetItem } from '@/api/refractive_archives/objective_ocular_examinations'
 export default {
   components: {
     Datetime,
-    Group
+    Group,
+    Toast
   },
   data() {
     return {
+      showPositionValue: false,
+      position: 'default',
+      toastText: '',
+      text: '',
       eye_examination_id: undefined,
       objective_ocular_examination: {
         examination_time: this.currentDate(),
@@ -146,7 +152,19 @@ export default {
       var ppp = this.objective_ocular_examination
       ppp.eye_examination_id = this.eye_examination_id
       createItem(ppp).then(res => {
-        this.getData()
+        // this.getData()
+        if (res.message === '请求成功' && res.status === 200) {
+          this.showPositionValue = true
+          this.toastText = '提交成功'
+          this.text = 'success'
+          this.timer = setTimeout(() => {
+            this.$router.go(-1)
+          }, 1000)
+        } else {
+          this.showPositionValue = true
+          this.toastText = '提交失败'
+          this.text = 'warn'
+        }
       })
     },
     currentDate() {
@@ -236,5 +254,15 @@ export default {
   .btn{
     btn()
     box-sizing: border-box;
+  }
+  .times >>> .weui-cells ,.times >>> .vux-no-group-title{
+    margin-top: 0;
+  }
+  .tit-name{
+    height: .72rem;
+    line-height: .72rem;
+    font-size: .32rem;
+    color: #fff;
+    background: $bgBlueColor;
   }
 </style>

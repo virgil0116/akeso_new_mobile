@@ -68,6 +68,7 @@ export default {
     this.getList()
   },
   methods: {
+    // api/v4/users/get_children
     getList() {
       fetchList({ child_id: this.child.id }).then(res => {
         this.eye_examinations = res.data.items
