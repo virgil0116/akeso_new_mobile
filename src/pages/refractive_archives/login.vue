@@ -1,7 +1,7 @@
 <template>
   <div class="container-login">
     <div class="login-header">
-      <h2 class="title">登录</h2>
+      <h2 class="title">诺瞳云視光健康管理数据录入系统</h2>
     </div>
     <div class="login-con">
       <div class="login-item">
@@ -143,7 +143,8 @@ export default {
   font-size: .6rem;
   color: #fff;
   text-align: left;
-  padding-top: 1rem;
+  line-height: .8rem;
+  padding-top: .6rem;
   padding-left: .4rem;
 }
 .login-con{
