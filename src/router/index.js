@@ -183,9 +183,9 @@ export const constantRouterMap = [
     component: () => import('@/pages/agreements/privacy')
   },
   {
-    path: '/disclaimer',
-    name: 'disclaimer',
-    component: () => import('@/pages/agreements/disclaimer')
+    path: '/protocols',
+    name: 'protocols',
+    component: () => import('@/pages/agreements/protocols')
   }
 ]
 
