@@ -176,6 +176,16 @@ export const constantRouterMap = [
     path: '/visual_little_remote',
     name: 'visual_little_remote',
     component: () => import('@/pages/refractive_archives/visual_little_remote')
+  },
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: () => import('@/pages/agreements/privacy')
+  },
+  {
+    path: '/disclaimer',
+    name: 'disclaimer',
+    component: () => import('@/pages/agreements/disclaimer')
   }
 ]
 
