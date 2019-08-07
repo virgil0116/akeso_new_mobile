@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>旧镜度数</p>
-    <group>
+    <p class="tit-name">旧镜度数</p>
+    <group class="times">
       <datetime
         v-model="archive.examination_time"
         title= "检查日期"
@@ -40,26 +40,32 @@
           <span class="left-bar">轴向 AX</span>
           <input v-model="archive.axis_os" type="number" class="input-group-lg" >
         </li>
-        <li>
-          <!--<span class="left-bar">录入屈光档案医生的名字</span>-->
-          <!--<input v-model="archive.sphere_od" type="text" class="input-group-lg" >-->
-        </li>
+        <!--<li>
+          <span class="left-bar">录入屈光档案医生的名字</span>
+          <input v-model="archive.sphere_od" type="text" class="input-group-lg" >
+        </li>-->
       </ul>
       <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
+    <toast v-model="showPositionValue" :time="1000" :position="position" :text="toastText" :type="text" is-show-mask />
   </div>
 </template>
 
 <script>
-import { Datetime, Group } from 'vux'
+import { Datetime, Group, Toast } from 'vux'
 import { createItem, fetItem } from '@/api/refractive_archives/archives'
 export default {
   components: {
     Datetime,
-    Group
+    Group,
+    Toast
   },
   data() {
     return {
+      showPositionValue: false,
+      position: 'default',
+      toastText: '',
+      text: '',
       eye_examination_id: undefined,
       archive: {
         type: 'current_spectacles',
@@ -101,7 +107,19 @@ export default {
       var ppp = this.archive
       ppp.eye_examination_id = this.eye_examination_id
       createItem(ppp).then(res => {
-        this.getData()
+        // this.getData()
+        if (res.message === '请求成功' && res.status === 200) {
+          this.showPositionValue = true
+          this.toastText = '提交成功'
+          this.text = 'success'
+          this.timer = setTimeout(() => {
+            this.$router.go(-1)
+          }, 1000)
+        } else {
+          this.showPositionValue = true
+          this.toastText = '提交失败'
+          this.text = 'warn'
+        }
       })
     },
     currentDate() {
@@ -191,5 +209,15 @@ export default {
   .btn{
     btn()
     box-sizing: border-box;
+  }
+  .times >>> .weui-cells ,.times >>> .vux-no-group-title{
+    margin-top: 0;
+  }
+  .tit-name{
+    height: .72rem;
+    line-height: .72rem;
+    font-size: .32rem;
+    color: #fff;
+    background: $bgBlueColor;
   }
 </style>
