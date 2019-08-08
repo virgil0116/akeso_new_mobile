@@ -193,18 +193,19 @@ export default {
   }
   .agree-title {
     margin: 20px 20px;
-    font-size: 32px;
+    font-size: 16px;
     font-weight: bold;
   }
   .agree-des {
     margin-top: 10px;
-    font-size: 18px;
+    font-size: 12px;
     text-align: left;
+    line-height: 20px;
     color: #90959a;
   }
   .agree-title2 {
     margin-top: 10px;
-    font-size: 24px;
+    font-size: 14px;
     text-align: left;
   }
 </style>
