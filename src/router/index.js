@@ -14,6 +14,16 @@ Vue.use(Router)
 
 export const constantRouterMap = [
   {
+    path: '/doctor_regist',
+    name: 'doctor_regist',
+    component: () => import('@/pages/doctors/regist')
+  },
+  {
+    path: '/regist_success',
+    name: 'regist_success',
+    component: () => import('@/pages/doctors/success')
+  },
+  {
     path: '/doctor',
     name: 'doctor',
     component: () => import('@/pages/mobile/doctor')

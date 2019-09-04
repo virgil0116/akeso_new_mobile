@@ -32,6 +32,7 @@ service.interceptors.response.use(
     const res = response.data
     console.log('res : ', res)
     if (res.status !== 200) {
+      // vux.toast.text('hello', 'top')
       console.log(res.message)
       return Promise.reject(res.message)
     } else {
