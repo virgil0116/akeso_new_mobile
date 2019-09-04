@@ -12,7 +12,14 @@
       <x-input v-model="temp.email" :show-clear="false" is-type="email" title="登录账号" placeholder="请输入您常用的邮箱地址(必填)" @blur="blur('input')"/>
       <x-input v-model="temp.password" :show-clear="false" :min="6" type="password" title="密码" placeholder="请输入密码(必填)" @blur="blur('input')"/>
       <x-input v-model="temp.password_confirmation" :show-clear="false" :min="6" type="password" title="确认密码" placeholder="请输入密码(必填)" @blur="blur('input')"/>
-      <x-input v-model="temp.address" :show-clear="false" title="地址" placeholder="请输入地址" @blur="blur('input')"/>
+    </group>
+    <group>
+      <selector v-model="temp.province_code" :options="province_data" :value-map="['code', 'name']" placeholder="请选择省份" title="省份" name="district" @on-change="onChange"/>
+      <selector v-model="temp.city_code" :options="city_data" :value-map="['code', 'name']" placeholder="请选择城市" title="城市" name="district" @on-change="onChange"/>
+      <selector v-model="temp.district_code" :options="district_data" :value-map="['code', 'name']" placeholder="请选择地区" title="地区" name="district" @on-change="onChange"/>
+    </group>
+    <group>
+      <x-input v-model="temp.address" :show-clear="false" title="详细地址" placeholder="请输入地址" @blur="blur('input')"/>
       <x-input v-model="temp.description" :show-clear="false" title="简介" placeholder="请输入简介" @blur="blur('input')"/>
     </group>
     <button class="button" @click="handleClickSave">确认注册</button>
@@ -21,7 +28,8 @@
 
 <script>
 import { createItem } from '@/api/doctors/doctors'
-import { Group, XInput, PopupPicker, PopupRadio, Datetime } from 'vux'
+import { fetchChinaData } from '@/api/common/city'
+import { Group, XInput, PopupPicker, PopupRadio, Datetime, Selector } from 'vux'
 const genderOptions = [
   { key: 'male', value: '男' },
   { key: 'female', value: '女' }
@@ -33,7 +41,8 @@ export default {
     XInput,
     PopupPicker,
     PopupRadio,
-    Datetime
+    Datetime,
+    Selector
   },
   data() {
     return {
@@ -48,11 +57,54 @@ export default {
         password_confirmation: undefined,
         address: undefined,
         job_title: undefined,
-        description: undefined
-      }
+        description: undefined,
+        province_code: undefined,
+        city_code: undefined,
+        district_code: undefined
+      },
+      province_data: [],
+      city_data: [],
+      district_data: []
     }
   },
+  watch: {
+    'temp.province_code': function(newVal, oldVal) {
+      if (newVal === undefined) {
+        return
+      }
+      this.getCityData(newVal)
+      this.temp.city_code = undefined
+      this.temp.district_code = undefined
+    },
+    'temp.city_code': function(newVal, oldVal) {
+      if (newVal === undefined) {
+        return
+      }
+      this.getDistrictData(newVal)
+      this.temp.district_code = undefined
+    }
+  },
+  created() {
+    this.getProvinceData()
+  },
   methods: {
+    getProvinceData() {
+      fetchChinaData().then(response => {
+        this.province_data = response.data
+      })
+    },
+    getCityData(val) {
+      fetchChinaData({ province_code: val }).then(response => {
+        this.city_data = response.data
+      })
+    },
+    getDistrictData(val) {
+      fetchChinaData({ city_code: val }).then(response => {
+        this.district_data = response.data
+      })
+    },
+    onChange() {
+    },
     handleClickSave() {
       if (this.temp.name === undefined || this.temp.name === '') {
         this.$vux.toast.text('请输入名称', 'center')

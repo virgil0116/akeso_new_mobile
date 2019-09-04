@@ -3,7 +3,7 @@
     <div class="success">
       <h2>注册成功</h2>
       <div class="content">
-        <p>请联系销售人员开通账户</p>
+        <p>请联系审核员审核通过</p>
       </div>
     </div>
   </div>
