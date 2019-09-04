@@ -3,7 +3,7 @@
     <p class="title">请填写您的注册信息</p>
     <group>
       <div class="group-title">若申请人为医生/視光师个人请填写某某医生/视光师工作室</div>
-      <x-input v-model="temp.name" :show-clear="false" title="机构名称" placeholder="例:XX医生工作室(必填)" @blur="blur('input')" />
+      <x-input v-model="temp.name" :show-clear="false" title="机构名称" placeholder="请输入机构名称(必填)" @blur="blur('input')" />
     </group>
     <group>
       <x-input v-model="temp.principal" :show-clear="false" title="联系人" is-type="china-name" placeholder="请输入您的姓名" @blur="blur('input')"/>
@@ -54,7 +54,6 @@ export default {
   },
   methods: {
     handleClickSave() {
-      // this.$router.push({ path: '/regist_success', query: {}})
       if (this.temp.name === undefined || this.temp.name === '') {
         this.$vux.toast.text('请输入名称', 'center')
         return
@@ -77,6 +76,7 @@ export default {
       }
       createItem(this.temp).then(res => {
         console.log('注册成功')
+        this.$router.push({ path: '/regist_success', query: {}})
       }).catch(error => {
         console.log('error => ', error)
         this.$vux.toast.text(error, 'center')
@@ -106,6 +106,8 @@ export default {
     background $cblue
     margin-top 1.5rem
   .group-title
+    padding-top 5px
+    padding-bottom 5px
     font-size 14px
     color gray
     text-align left
