@@ -3,7 +3,8 @@
     <div class="success">
       <h2>注册成功</h2>
       <div class="content">
-        <p>请联系审核员审核通过</p>
+        <p>现场联系我们的工作人员审核通过</p>
+        <p>有机会获得价值20000元的青少年校园近视健康行为监测管理大数据系统</p>
       </div>
     </div>
   </div>
@@ -41,5 +42,8 @@
     font-weight 300
     font-size 24px
   .content
-    margin-top 30px
+    margin-top 20px
+    padding 0px 20px
+    font-size 16px
+    line-height 24px
 </style>
