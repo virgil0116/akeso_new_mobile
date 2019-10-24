@@ -14,6 +14,7 @@
 export default {
   data() {
     return {
+      eye_examination_id: undefined,
       list: [
         {
           title: '主导、眼位(前五项)',
@@ -30,6 +31,9 @@ export default {
       ]
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+  },
   methods: {
     handleClick(id) {
       var url = null
@@ -44,7 +48,7 @@ export default {
           url = 'visual_little_remote' // 泪液检查
           break
       }
-      this.$router.push({ name: url, query: { data: JSON.stringify() }})
+      this.$router.push({ name: url, query: { eye_examination_id: this.eye_examination_id }})
     }
   }
 }

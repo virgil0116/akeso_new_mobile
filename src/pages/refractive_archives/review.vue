@@ -13,6 +13,7 @@
 export default {
   data() {
     return {
+      eye_examination_id: undefined,
       list: [
         {
           title: '小瞳复光',
@@ -25,6 +26,9 @@ export default {
       ]
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+  },
   methods: {
     handleClick(id) {
       var url = null
@@ -36,7 +40,7 @@ export default {
           url = 'list_optician' // 配镜处方
           break
       }
-      this.$router.push({ name: url, query: { data: JSON.stringify() }})
+      this.$router.push({ name: url, query: { eye_examination_id: this.eye_examination_id }})
     }
   }
 }

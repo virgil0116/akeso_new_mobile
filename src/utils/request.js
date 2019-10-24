@@ -11,7 +11,7 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   config => {
-    if (store.getters.authenticationToken) {
+    if (store.state.user.state.authenticationToken) {
       config.headers['authenticationToken'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
     }
     return config
@@ -32,6 +32,7 @@ service.interceptors.response.use(
     const res = response.data
     console.log('res : ', res)
     if (res.status !== 200) {
+      // vux.toast.text('hello', 'top')
       console.log(res.message)
       return Promise.reject(res.message)
     } else {

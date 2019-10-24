@@ -14,6 +14,7 @@
 export default {
   data() {
     return {
+      eye_examination_id: undefined,
       list: [
         // {
         //   title: '眼部检查主观',
@@ -38,6 +39,9 @@ export default {
       ]
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+  },
   methods: {
     handleClick(id) {
       var url = null
@@ -52,7 +56,7 @@ export default {
           url = 'eye_objective_tear' // 泪液检查
           break
       }
-      this.$router.push({ name: url, query: { data: JSON.stringify() }})
+      this.$router.push({ name: url, query: { eye_examination_id: this.eye_examination_id }})
     }
   }
 }

@@ -14,6 +14,16 @@ Vue.use(Router)
 
 export const constantRouterMap = [
   {
+    path: '/doctor_regist',
+    name: 'doctor_regist',
+    component: () => import('@/pages/doctors/regist')
+  },
+  {
+    path: '/regist_success',
+    name: 'regist_success',
+    component: () => import('@/pages/doctors/success')
+  },
+  {
     path: '/doctor',
     name: 'doctor',
     component: () => import('@/pages/mobile/doctor')
@@ -176,6 +186,16 @@ export const constantRouterMap = [
     path: '/visual_little_remote',
     name: 'visual_little_remote',
     component: () => import('@/pages/refractive_archives/visual_little_remote')
+  },
+  {
+    path: '/privacy',
+    name: 'privacy',
+    component: () => import('@/pages/agreements/privacy')
+  },
+  {
+    path: '/protocols',
+    name: 'protocols',
+    component: () => import('@/pages/agreements/protocols')
   }
 ]
 

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>眼压</p>
-    <group>
+    <p class="tit-name">眼压</p>
+    <group class="times">
       <datetime
-        v-model="date"
+        v-model="objective_ocular_examination.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -15,38 +15,82 @@
       <ul class="list">
         <li>
           <span class="left-bar">非接触眼压（mmHg)</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.intraocular_pressure_non_contact_od" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">左眼</h3>
       <ul class="list">
         <li>
           <span class="left-bar">非接触眼压（mmHg)</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="objective_ocular_examination.intraocular_pressure_non_contact_os" type="number" class="input-group-lg" >
         </li>
-        <li>
+        <!--<li>
           <span class="left-bar">录入屈光档案医生的名字</span>
           <input type="text" class="input-group-lg" >
-        </li>
+        </li>-->
       </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
+    <toast v-model="showPositionValue" :time="1000" :position="position" :text="toastText" :type="text" is-show-mask />
   </div>
 </template>
 
 <script>
-import { Datetime, Group } from 'vux'
+import { Datetime, Group, Toast } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/objective_ocular_examinations'
 export default {
   components: {
     Datetime,
-    Group
+    Group,
+    Toast
   },
   data() {
     return {
-      date: '2019-06-06'
+      showPositionValue: false,
+      position: 'default',
+      toastText: '',
+      text: '',
+      eye_examination_id: undefined,
+      objective_ocular_examination: {
+        examination_time: this.currentDate(),
+        intraocular_pressure_non_contact_od: undefined,
+        intraocular_pressure_non_contact_os: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ eye_examination_id: this.eye_examination_id }).then(res => {
+        Object.assign(this.objective_ocular_examination, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.objective_ocular_examination
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        // this.getData()
+        if (res.message === '请求成功' && res.status === 200) {
+          this.showPositionValue = true
+          this.toastText = '提交成功'
+          this.text = 'success'
+          this.timer = setTimeout(() => {
+            this.$router.go(-1)
+          }, 1000)
+        } else {
+          this.showPositionValue = true
+          this.toastText = '提交失败'
+          this.text = 'warn'
+        }
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },
@@ -130,5 +174,15 @@ export default {
   .btn{
     btn()
     box-sizing: border-box;
+  }
+  .times >>> .weui-cells ,.times >>> .vux-no-group-title{
+    margin-top: 0;
+  }
+  .tit-name{
+    height: .72rem;
+    line-height: .72rem;
+    font-size: .32rem;
+    color: #fff;
+    background: $bgBlueColor;
   }
 </style>

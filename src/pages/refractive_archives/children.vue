@@ -3,17 +3,17 @@
     <div class="header" @click="handleChild">
       <img :src="avatar" alt="" class="avatar">
       <div class="info">
-        <p class="name">名字</p>
-        <span>男</span>
-        <span>0岁</span>
-        <span>100CM</span>
+        <p class="name">{{ child.name }}</p>
+        <span>{{ child.gender | genderFilter }}</span>
+        <span>{{ child.age }}岁</span>
+        <span>{{ child.height }}CM</span>
       </div>
-      <span class="icongengduo iconfont btn-click" />
+      <!--<span class="icongengduo iconfont btn-click" />-->
     </div>
     <div class="list">
-      <h3 class="title">共有<span class="c-blue">1</span>份屈光档案的报告</h3>
-      <div class="item-list" @click="handleList">
-        <span>屈光档案</span>
+      <h3 class="title">共有<span class="c-blue">{{ eye_examinations.length }}</span>份屈光档案的报告</h3>
+      <div v-for="item in eye_examinations" :key="item.id" class="item-list" @click="handleList(item.id)">
+        <span>{{ item.createFileTime }}   {{ item.name }}</span>
         <span class="icongengduo iconfont" />
       </div>
     </div>
@@ -37,6 +37,7 @@
 <script>
 import avatar from '@/assets/image/header-avatar.png'
 import { Confirm, TransferDom } from 'vux'
+import { fetchList, createItem } from '@/api/refractive_archives/eye_examinations'
 export default {
   name: 'Child',
   directives: {
@@ -45,21 +46,41 @@ export default {
   components: {
     Confirm
   },
+  filters: {
+    genderFilter(gender) {
+      const genderMap = {
+        male: '男',
+        female: '女'
+      }
+      return genderMap[gender]
+    }
+  },
   data() {
     return {
       avatar,
-      show: false
+      show: false,
+      child: {},
+      eye_examinations: []
     }
   },
+  created() {
+    this.child = JSON.parse(this.$route.query.data)
+    this.getList()
+  },
   methods: {
+    // api/v4/users/get_children
+    getList() {
+      fetchList({ child_id: this.child.id }).then(res => {
+        this.eye_examinations = res.data.items
+      })
+    },
     onCancel() {
       console.log('on cancel')
     },
-    onConfirm(msg) {
-      console.log('on confirm')
-      if (msg) {
-        alert(msg)
-      }
+    onConfirm() {
+      createItem({ child_id: this.child.id }).then(res => {
+        this.getList()
+      })
     },
     onHide() {
       console.log('on hide')
@@ -71,12 +92,10 @@ export default {
       this.show = true
     },
     handleChild() {
-      console.log(111)
-      // child_details
       this.$router.push({ name: 'child_details', query: { data: JSON.stringify() }})
     },
-    handleList() {
-      this.$router.push({ name: 'classification', query: { data: JSON.stringify() }})
+    handleList(val) {
+      this.$router.push({ name: 'classification', query: { eye_examination_id: val }})
     }
   }
 }

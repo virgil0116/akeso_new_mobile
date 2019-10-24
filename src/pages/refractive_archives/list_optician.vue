@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>配镜处方</p>
-    <group>
+    <p class="tit-name">配镜处方</p>
+    <group class="times">
       <datetime
-        v-model="date"
+        v-model="archive.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -15,102 +15,165 @@
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.sphere_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.cylinder_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.axis_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">棱镜 △</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.prism_od" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">底向Base</span>
-          <selector :options="degreesList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.base_od" :options="degreesList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
           <span class="left-bar">矫正视力</span>
-          <selector :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.corrected_visual_acuity_od" :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
           <span class="left-bar">瞳距PD （ OU ）</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.pupillary_distance_od" type="number" class="input-group-lg" >
         </li>
       </ul>
       <h3 class="title">左眼OS</h3>
       <ul class="list">
         <li>
           <span class="left-bar">球镜 DS</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.sphere_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">柱镜 DC</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.cylinder_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">轴向 AX</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.axis_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">棱镜 △</span>
-          <input type="number" class="input-group-lg" >
+          <input v-model="archive.prism_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">底向Base</span>
-          <selector :options="degreesList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.base_os" :options="degreesList" dir="rtl" title="" class="input-group-lg" />
         </li>
         <li>
           <span class="left-bar">矫正视力</span>
-          <selector :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
+          <selector v-model="archive.corrected_visual_acuity_os" :options="selectDataList" dir="rtl" title="" class="input-group-lg" />
+        </li>
+        <li>
+          <span class="left-bar">瞳距PD （ OU ）</span>
+          <input v-model="archive.pupillary_distance_os" type="number" class="input-group-lg" >
         </li>
         <li>
           <span class="left-bar">佩戴方式</span>
           <div class="text-left">
-            <check-icon :value.sync="demo1" type="plain">远用</check-icon>
-            <check-icon :value.sync="demo2" type="plain">近用</check-icon>
+            <check-icon :value.sync="archive.wear_distance" type="plain">远用</check-icon>
+            <check-icon :value.sync="archive.wear_near" type="plain">近用</check-icon>
             <div class="text">
               <span>附加ADD</span>
-              <input type="number" class="input-group" >
+              <input v-model="archive.nearly_attached_add" type="number" class="input-group" >
             </div>
           </div>
         </li>
-        <li>
+        <!--<li>
           <span class="left-bar">录入屈光档案医生的名字</span>
           <input type="text" class="input-group-lg" >
-        </li>
+        </li>-->
       </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
+    <toast v-model="showPositionValue" :time="1000" :position="position" :text="toastText" :type="text" is-show-mask />
   </div>
 </template>
 
 <script>
-import { Datetime, Group, Selector, CheckIcon } from 'vux'
+import { Datetime, Group, Selector, CheckIcon, Toast } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/archives'
 export default {
   components: {
     Datetime,
     Group,
     Selector,
-    CheckIcon
+    CheckIcon,
+    Toast
   },
   data() {
     return {
       degreesList: ['', '0.1', '0.12', '0.15', '0.2', '0.25', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.5', '2.0', '0.08', '0.06', '0.05', '0.04', '0.02', '树指', '手动', '光感', '无光感'],
       selectDataList: ['', '底向in', '底向out', '底向up', '底向down'],
       medicineList: ['', '托吡卡胺', '环戊通', '阿托品', '其他'],
-      value1: '',
-      value2: '',
-      demo1: false,
-      demo2: false,
-      date: '2019-06-06'
+      eye_examination_id: undefined,
+      showPositionValue: false,
+      position: 'default',
+      toastText: '',
+      text: '',
+      archive: {
+        type: 'glass_prescription',
+        examination_time: this.currentDate(),
+        sphere_od: undefined,
+        sphere_os: undefined,
+        cylinder_od: undefined,
+        cylinder_os: undefined,
+        axis_od: undefined,
+        axis_os: undefined,
+        prism_od: undefined,
+        prism_os: undefined,
+        base_od: undefined,
+        base_os: undefined,
+        corrected_visual_acuity_od: undefined,
+        corrected_visual_acuity_os: undefined,
+        mydriatic_drugs: undefined,
+        pupillary_distance_od: undefined,
+        pupillary_distance_os: undefined,
+        pupillary_distance_ou: undefined,
+        wear_distance: undefined,
+        wear_near: undefined,
+        nearly_attached_add: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ type: this.archive.type, eye_examination_id: this.eye_examination_id }).then(res => {
+        // this.archive = res.data
+        Object.assign(this.archive, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.archive
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        // this.getData()
+        if (res.message === '请求成功' && res.status === 200) {
+          this.showPositionValue = true
+          this.toastText = '提交成功'
+          this.text = 'success'
+          this.timer = setTimeout(() => {
+            this.$router.go(-1)
+          }, 1000)
+        } else {
+          this.showPositionValue = true
+          this.toastText = '提交失败'
+          this.text = 'warn'
+        }
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },
@@ -203,5 +266,15 @@ export default {
   }
   .input-group{
     border-bottom:1px solid $bColor
+  }
+  .times >>> .weui-cells ,.times >>> .vux-no-group-title{
+    margin-top: 0;
+  }
+  .tit-name{
+    height: .72rem;
+    line-height: .72rem;
+    font-size: .32rem;
+    color: #fff;
+    background: $bgBlueColor;
   }
 </style>

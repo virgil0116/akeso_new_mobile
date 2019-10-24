@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>前五项</p>
-    <group>
+    <!--<p class="tit-name">主导眼、眼位、眼球运动</p>-->
+    <group class="times">
       <datetime
-        v-model="date"
+        v-model="visual_function_test.examination_time"
         title= "检查日期"
         @on-change="change"
         @on-cancel="log('cancel')"
@@ -14,23 +14,23 @@
       <ul class="list">
         <li>
           <span class="left-bar">主导眼</span>
-          <selector :options="list" v-model="value1" dir="rtl" title="" class="input-group-lg" @on-change="onChange" />
+          <selector :options="list" v-model="visual_function_test.dominant_eye" dir="rtl" title="" class="input-group-lg" @on-change="onChange" />
         </li>
         <li>
           <span class="left-bar">眼位</span>
-          <input v-model="eyePosition" type="text" class="input-group-lg">
+          <input v-model="visual_function_test.phoria" type="text" class="input-group-lg">
         </li>
         <li>
           <span class="left-bar">眼球运动</span>
-          <input v-model="eyeMovement" type="text" class="input-group-lg">
+          <input v-model="visual_function_test.eye_movement" type="text" class="input-group-lg">
         </li>
         <li class="reference">
           <div class="reference-tit">参考值： 40~2000</div>
           <div class="reference-con">
             <span class="left-bar">立体视检查</span>
             <div class="text-left">
-              <check-icon :value.sync="demo1" type="plain">立体检查</check-icon>
-              <div v-if="demo1" class="text">
+              <check-icon :value.sync="visual_function_test.is_stereo_tests" type="plain">立体检查</check-icon>
+              <div v-if="visual_function_test.is_stereo_tests" class="text">
                 <input type="number" class="input-group" >
               </div>
             </div>
@@ -41,36 +41,44 @@
       <ul class="list">
         <li>
           <span class="left-bar">距离33cm</span>
-          <selector :options="distanceThirty" dir="rtl" title="" class="input-group-select" />
+          <selector v-model="visual_function_test.worth_4_dots_33cm" :options="distanceThirty" dir="rtl" title="" class="input-group-select" />
         </li>
         <li>
           <span class="left-bar">距离6m</span>
-          <selector :options="distanceThirtyT" dir="rtl" title="" class="input-group-select" />
+          <selector v-model="visual_function_test.worth_4_dots_6m" :options="distanceThirtyT" dir="rtl" title="" class="input-group-select" />
         </li>
       </ul>
-      <ul class="list">
+      <!--<ul class="list">
         <li>
           <span class="left-bar" @click="handleClick">录入屈光档案医生的名字</span>
           <input type="text" class="input-group-lg" >
         </li>
-      </ul>
-      <button class="btn btn-margin">确 认 添 加</button>
+      </ul>-->
+      <button class="btn btn-margin" @click="handleClickSave">保    存</button>
     </div>
+    <toast v-model="showPositionValue" :time="1000" :position="position" :text="toastText" :type="text" is-show-mask />
   </div>
 </template>
 
 <script>
-import { PopupPicker, Selector, Datetime, Group, CheckIcon } from 'vux'
+import { PopupPicker, Selector, Datetime, Group, CheckIcon, Toast } from 'vux'
+import { createItem, fetItem } from '@/api/refractive_archives/visual_function_tests'
 export default {
   components: {
     PopupPicker,
     Selector,
     Datetime,
     Group,
-    CheckIcon
+    CheckIcon,
+    Toast
   },
   data() {
     return {
+      showPositionValue: false,
+      position: 'default',
+      toastText: '',
+      text: '',
+      eye_examination_id: undefined,
       list: [
         { key: '', value: '' },
         { key: 'right', value: '右眼' },
@@ -94,24 +102,57 @@ export default {
         { key: 'five_6m', value: '可见5个灯' }
       ],
       Stereoscopy: ['', '有', '无'],
-      value1: '',
-      value2: '',
-      demo1: false,
-      eyePosition: '正常',
-      eyeMovement: '正常',
-      date: '2019-06-06'
+      visual_function_test: {
+        examination_time: this.currentDate(),
+        dominant_eye: undefined,
+        phoria: undefined,
+        eye_movement: undefined,
+        is_stereo_tests: false,
+        worth_4_dots_33cm: undefined,
+        worth_4_dots_6m: undefined
+      }
     }
   },
+  created() {
+    this.eye_examination_id = this.$route.query.eye_examination_id
+    this.getData()
+  },
   methods: {
+    getData() {
+      fetItem({ eye_examination_id: this.eye_examination_id }).then(res => {
+        Object.assign(this.visual_function_test, res.data)
+      })
+    },
+    handleClickSave() {
+      var ppp = this.visual_function_test
+      ppp.eye_examination_id = this.eye_examination_id
+      createItem(ppp).then(res => {
+        // this.getData()
+        if (res.message === '请求成功' && res.status === 200) {
+          this.showPositionValue = true
+          this.toastText = '提交成功'
+          this.text = 'success'
+          this.timer = setTimeout(() => {
+            this.$router.go(-1)
+          }, 1000)
+        } else {
+          this.showPositionValue = true
+          this.toastText = '提交失败'
+          this.text = 'warn'
+        }
+      })
+    },
+    currentDate() {
+      var curDate = new Date()
+      return curDate.getFullYear() + '-' + (curDate.getMonth() + 1) + '-' + curDate.getDate()
+    },
     handleClick() {
-      console.log(this.value1[0], this.value2)
     },
     log(str1, str2 = '') {
       console.log(str1, str2)
     },
     onConfirm(val) {
       console.log('on-confirm arg', val)
-      console.log('current value', this.value1)
     },
     change(value) {
       console.log('change', value)
@@ -216,6 +257,16 @@ export default {
     text-align: center;
     width: 5em;
     border-bottom:1px solid $bColor
+  }
+  .times >>> .weui-cells ,.times >>> .vux-no-group-title{
+    margin-top: 0;
+  }
+  .tit-name{
+    height: .72rem;
+    line-height: .72rem;
+    font-size: .32rem;
+    color: #fff;
+    background: $bgBlueColor;
   }
 </style>
 
